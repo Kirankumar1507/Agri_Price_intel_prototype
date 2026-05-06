@@ -20,7 +20,7 @@ from pathlib import Path
 
 import requests
 
-CACHE_PATH = Path(".cache/mandi_coords.json")
+CACHE_PATH = Path("data/mandi_coords.json")
 USER_AGENT = "agri-location-intel/0.2 (personal tool)"
 NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
 

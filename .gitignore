@@ -34,6 +34,7 @@ data/*.csv
 !data/schemes.json
 !data/crop_calendar.json
 !data/msp_rates.json
+!data/mandi_coords.json
 
 # Claude/Gemini config
 .claude/
