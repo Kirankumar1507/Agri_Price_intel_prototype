@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 from datetime import datetime
 from functools import lru_cache
 from pathlib import Path
@@ -358,12 +359,11 @@ _LANG_SUFFIX = {
 
 
 def _chat(system: str, user_obj, language: str = "en") -> str:
-    import google.generativeai as genai
-    try:
-        import ollama
-    except ImportError:
-        ollama = None
+    """Route LLM call to Gemini (cloud) when GEMINI_API_KEY is set, else Ollama (local).
 
+    Both providers are imported lazily inside their respective branch so a missing
+    package never crashes the app — the function falls back to a clean placeholder.
+    """
     if language in _LANG_SUFFIX:
         system = system + _LANG_SUFFIX[language]
     content = (
@@ -372,30 +372,44 @@ def _chat(system: str, user_obj, language: str = "en") -> str:
         else str(user_obj)
     )
 
-    # Use Gemini if API key is present (Cloud Deployment)
     gemini_key = os.environ.get("GEMINI_API_KEY")
     if gemini_key:
+        try:
+            import google.generativeai as genai
+        except ImportError as e:
+            print(f"[agent._chat] google-generativeai not installed: {e}", file=sys.stderr)
+            return _LLM_PLACEHOLDER
         try:
             genai.configure(api_key=gemini_key)
             model = genai.GenerativeModel("gemini-1.5-flash")
             response = model.generate_content(f"SYSTEM: {system}\n\nUSER DATA: {content}")
             return response.text
         except Exception as e:
-            return f"LLM Error: {str(e)}"
+            print(f"[agent._chat] Gemini call failed: {e}", file=sys.stderr)
+            return _LLM_PLACEHOLDER
 
-    # Fallback to local Ollama (Local Development)
-    if ollama is not None:
-        try:
-            resp = ollama.chat(
-                model=MODEL,
-                messages=[
-                    {"role": "system", "content": system},
-                    {"role": "user", "content": content},
-                ],
-                options={"temperature": 0.2},
-            )
-            return resp["message"]["content"]
-        except Exception:
-            return "Narrative unavailable (Ollama offline). Use GEMINI_API_KEY for cloud."
-    
-    return "Narrative unavailable (Ollama missing). Use GEMINI_API_KEY for cloud."
+    # Fallback: local Ollama for development. Skipped silently in cloud.
+    try:
+        import ollama
+    except ImportError:
+        return _LLM_PLACEHOLDER
+    try:
+        resp = ollama.chat(
+            model=MODEL,
+            messages=[
+                {"role": "system", "content": system},
+                {"role": "user", "content": content},
+            ],
+            options={"temperature": 0.2},
+        )
+        return resp["message"]["content"]
+    except Exception as e:
+        print(f"[agent._chat] Ollama call failed: {e}", file=sys.stderr)
+        return _LLM_PLACEHOLDER
+
+
+_LLM_PLACEHOLDER = (
+    "_LLM narrative unavailable for this section. "
+    "Set `GEMINI_API_KEY` in Streamlit Cloud Secrets, "
+    "or run `ollama serve` locally._"
+)

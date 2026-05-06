@@ -1,11 +1,18 @@
 from __future__ import annotations
 
-import folium
-import pandas as pd
+import sys
 import os
-import streamlit as st
-from dotenv import load_dotenv
-from streamlit_folium import st_folium
+
+try:
+    import folium
+    import pandas as pd
+    import streamlit as st
+    from dotenv import load_dotenv
+    from streamlit_folium import st_folium
+except Exception as e:
+    # This will only show if Streamlit managed to load enough to show anything
+    print(f"CRITICAL STARTUP ERROR: {e}")
+    raise e
 
 from src.agent import (
     analyze_market,

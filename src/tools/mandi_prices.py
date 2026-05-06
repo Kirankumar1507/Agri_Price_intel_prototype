@@ -55,12 +55,15 @@ def fetch_all_mandis_for_state(state: str) -> list[dict]:
     """Return unique {market, district} pairs active in the state. 
     Checks data/mandi_lists.json first, then local cache, then API.
     """
-    # 1. Check pre-seeded static list (FASTEST for Live Demo)
+    # 1. Check pre-seeded static list (FASTEST for Live Demo).
+    #    Only short-circuit if the seed actually has entries — empty lists
+    #    fall through to cache/API so the app stays usable when the seed
+    #    file is committed but unpopulated.
     seed_path = Path("data/mandi_lists.json")
     if seed_path.exists():
         try:
             lists = json.loads(seed_path.read_text())
-            if state in lists:
+            if state in lists and lists[state]:
                 return lists[state]
         except Exception:
             pass
