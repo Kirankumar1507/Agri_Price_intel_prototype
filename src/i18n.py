@@ -6,6 +6,11 @@ LANGUAGES = {
     "hi": "हिन्दी (Hindi)"
 }
 
+STATE_DEFAULT_LANG = {
+    "Karnataka": "kn",
+    "Haryana": "hi"
+}
+
 LABELS = {
     "sidebar.language": {
         "en": "Language",
