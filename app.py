@@ -252,10 +252,7 @@ with st.sidebar:
 # --- Compute (once per Go click or demo trigger) ---
 run_demo = st.session_state.pop("_run_demo", False)
 if (go or run_demo) and selected:
-    with st.spinner(
-        f"Fetching {crop} prices in {state}, geocoding mandis "
-        "(first run per state/crop is slow)..."
-    ):
+    with st.spinner("Fetching live mandi prices & analyzing market trends..."):
         st.session_state["result"] = analyze_market(
             state, crop,
             user_lat=selected["lat"],

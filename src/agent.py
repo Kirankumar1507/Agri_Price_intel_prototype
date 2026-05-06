@@ -11,7 +11,10 @@ from datetime import datetime
 from functools import lru_cache
 from pathlib import Path
 
-import ollama
+try:
+    import ollama
+except ImportError:
+    ollama = None
 import google.generativeai as genai
 
 from .config import TRANSPORT_RATE_PER_KM, commodity_display_to_api
@@ -381,12 +384,18 @@ def _chat(system: str, user_obj, language: str = "en") -> str:
             return f"LLM Error: {str(e)}"
 
     # Fallback to local Ollama (Local Development)
-    resp = ollama.chat(
-        model=MODEL,
-        messages=[
-            {"role": "system", "content": system},
-            {"role": "user", "content": content},
-        ],
-        options={"temperature": 0.2},
-    )
-    return resp["message"]["content"]
+    if ollama is not None:
+        try:
+            resp = ollama.chat(
+                model=MODEL,
+                messages=[
+                    {"role": "system", "content": system},
+                    {"role": "user", "content": content},
+                ],
+                options={"temperature": 0.2},
+            )
+            return resp["message"]["content"]
+        except Exception:
+            return "Narrative unavailable (Ollama offline). Use GEMINI_API_KEY for cloud."
+    
+    return "Narrative unavailable (Ollama missing). Use GEMINI_API_KEY for cloud."
