@@ -1,0 +1,25 @@
+{
+  "_meta": {
+    "source": "CACP/CCEA notifications — MSP for Marketing Season 2025-26. Kharif crops announced June 2025, Rabi crops announced October 2025. Values in ₹ per quintal for FAQ (Fair Average Quality).",
+    "last_updated": "2026-04-30",
+    "note": "MSP for Sugarcane is technically FRP (Fair & Remunerative Price) set by Cabinet, not CACP MSP. Included here for convenience. Horticulture crops (Tomato, Onion, Potato) have no MSP — they are covered under Operation Greens price stabilisation."
+  },
+  "rates": {
+    "Wheat":                { "msp": 2425, "season": "Rabi 2025-26",   "unit": "₹/qtl" },
+    "Paddy":                { "msp": 2320, "season": "Kharif 2025-26", "unit": "₹/qtl" },
+    "Ragi":                 { "msp": 4290, "season": "Kharif 2025-26", "unit": "₹/qtl" },
+    "Tur":                  { "msp": 7550, "season": "Kharif 2025-26", "unit": "₹/qtl" },
+    "Jowar":                { "msp": 3371, "season": "Kharif 2025-26", "unit": "₹/qtl" },
+    "Bajra":                { "msp": 2625, "season": "Kharif 2025-26", "unit": "₹/qtl" },
+    "Maize":                { "msp": 2225, "season": "Kharif 2025-26", "unit": "₹/qtl" },
+    "Cotton":               { "msp": 7121, "season": "Kharif 2025-26", "unit": "₹/qtl", "note": "Medium staple; long staple ₹7,521/qtl" },
+    "Groundnut":            { "msp": 6783, "season": "Kharif 2025-26", "unit": "₹/qtl" },
+    "Mustard":              { "msp": 5950, "season": "Rabi 2025-26",   "unit": "₹/qtl" },
+    "Bengal Gram (Chana)":  { "msp": 5650, "season": "Rabi 2025-26",   "unit": "₹/qtl" },
+    "Green Gram (Moong)":   { "msp": 8682, "season": "Kharif 2025-26", "unit": "₹/qtl" },
+    "Sugarcane":            { "msp": 340,  "season": "2025-26 FRP",    "unit": "₹/qtl", "note": "FRP, not MSP. State-wise SAP may be higher." },
+    "Onion":                null,
+    "Tomato":               null,
+    "Potato":               null
+  }
+}

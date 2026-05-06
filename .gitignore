@@ -1,0 +1,39 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# Caches
+.cache/
+
+# Environment
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Notebooks
+*.ipynb
+
+# Data artifacts (generated, not tracked)
+data/*.geojson
+data/*.csv
+
+# Keep curated data files
+!data/schemes.json
+!data/crop_calendar.json
+!data/msp_rates.json
+
+# Claude/Gemini config
+.claude/

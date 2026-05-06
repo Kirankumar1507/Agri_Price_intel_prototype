@@ -1,0 +1,123 @@
+[
+  {
+    "name": "PM-KISAN",
+    "authority": "Centre",
+    "stage": "growing",
+    "applicable_crops": ["all"],
+    "districts": ["all"],
+    "eligibility": "Small and marginal farmer families with cultivable land, subject to exclusion criteria (income tax payers, govt employees above Group D, etc.).",
+    "benefit": "₹6,000 per year paid in three equal installments of ₹2,000 directly to bank account.",
+    "how_to_apply": "Register at pmkisan.gov.in or via nearest Common Service Centre (CSC). Provide Aadhaar, bank account, and land records.",
+    "source_url": "https://pmkisan.gov.in/"
+  },
+  {
+    "name": "Raitha Siri (Millet Incentive)",
+    "authority": "Karnataka",
+    "stage": "growing",
+    "applicable_crops": ["Ragi", "Jowar", "Bajra", "Foxtail Millet", "Little Millet"],
+    "districts": ["all"],
+    "eligibility": "Farmers in Karnataka growing designated millets, with land records (pahani/RTC) and bank account linked to Aadhaar.",
+    "benefit": "₹10,000 per hectare (up to a cap, typically 2 hectares) as direct incentive for millet cultivation.",
+    "how_to_apply": "Apply through Raitha Samparka Kendra (RSK) in your hobli. Submit RTC, Aadhaar, bank passbook, and crop survey confirmation.",
+    "source_url": "https://raitamitra.karnataka.gov.in/"
+  },
+  {
+    "name": "Kisan Credit Card (KCC)",
+    "authority": "Centre",
+    "stage": "growing",
+    "applicable_crops": ["all"],
+    "districts": ["all"],
+    "eligibility": "All farmers — individual or joint borrowers — who own or lease cultivable land. Tenant farmers, oral lessees, and sharecroppers also eligible. Animal husbandry and fisheries farmers covered under extended KCC.",
+    "benefit": "Short-term crop loan at 4% interest (after govt subsidy on 7% base). Credit limit set based on land holding, cropping pattern, and scale of finance. Interest subvention of 3% for prompt repayment. Covers post-harvest and consumption needs too.",
+    "how_to_apply": "Apply at any commercial bank, cooperative bank, or regional rural bank branch. Bring land records (patta/RTC/khatauni), Aadhaar, two passport photos, and existing loan details (if any). Processing typically 15 days.",
+    "source_url": "https://www.pmkisan.gov.in/KCC.aspx"
+  },
+  {
+    "name": "Soil Health Card Scheme",
+    "authority": "Centre",
+    "stage": "growing",
+    "applicable_crops": ["all"],
+    "districts": ["all"],
+    "eligibility": "All farmers with cultivable land. Cards are issued at grid-based soil sampling — every farm in a village is covered cyclically (once every 2 years). No need to apply individually in most states; soil testing is done centrally.",
+    "benefit": "Free soil test with crop-specific fertilizer recommendations (NPK + micronutrients). Helps reduce over-use of urea and improve yield. Digital card available on soilhealth.dac.gov.in.",
+    "how_to_apply": "Check your existing card at soilhealth.dac.gov.in with your Aadhaar or farmer ID. If not tested yet, request through your block agriculture office or Krishi Vigyan Kendra (KVK). Soil samples are collected grid-wise by state agriculture departments.",
+    "source_url": "https://soilhealth.dac.gov.in/"
+  },
+  {
+    "name": "PM-KUSUM (Solar Pumps & Grid)",
+    "authority": "Centre",
+    "stage": "growing",
+    "applicable_crops": ["all"],
+    "districts": ["all"],
+    "eligibility": "Farmers, water user associations, FPOs, and panchayats. Component A: farmers with barren/fallow land for solar power plants. Component B: individual farmers for standalone solar pumps (up to 7.5 HP). Component C: farmers with existing grid-connected pumps for solarization.",
+    "benefit": "Component B (most popular): 60% subsidy on standalone solar pumps (30% Centre + 30% state). Farmer pays only 40% (can be via loan). Saves ₹40,000–80,000/year in diesel/electricity costs. Component C: sell surplus solar power to DISCOM at feed-in tariff.",
+    "how_to_apply": "Apply via state renewable energy department portal or mnre.gov.in. Submit land documents, Aadhaar, bank details, and existing pump/connection details (for Component C). State agency empanels vendors; farmer chooses from list.",
+    "source_url": "https://pmkusum.mnre.gov.in/"
+  },
+  {
+    "name": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+    "authority": "Centre",
+    "stage": "insurance",
+    "applicable_crops": ["Paddy", "Ragi", "Tur", "Maize", "Cotton", "Wheat", "Onion", "Tomato", "Groundnut", "Mustard", "Bajra", "Jowar", "Sugarcane", "Bengal Gram (Chana)", "Green Gram (Moong)", "Potato"],
+    "districts": ["all"],
+    "eligibility": "Farmers growing notified crops in notified areas. Both loanee and non-loanee farmers eligible. Voluntary for non-loanee.",
+    "benefit": "Crop insurance against yield loss from drought, flood, pest, disease. Premium: 2% (kharif), 1.5% (rabi), 5% (commercial/horticulture). Government pays the balance.",
+    "how_to_apply": "Apply via bank (if loanee), CSC, insurance company agent, or pmfby.gov.in. Deadline is typically 15 days before cutoff for the season.",
+    "source_url": "https://pmfby.gov.in/"
+  },
+  {
+    "name": "eNAM (National Agriculture Market)",
+    "authority": "Centre",
+    "stage": "selling",
+    "applicable_crops": ["all"],
+    "districts": ["all"],
+    "eligibility": "All farmers, traders, commission agents, and FPOs. The mandi must be integrated with eNAM (1,300+ mandis across 23 states as of 2025). Farmer needs Aadhaar-linked bank account and registration on eNAM portal.",
+    "benefit": "Online transparent bidding for produce — see bids from multiple buyers, not just the local commission agent. Reduces intermediary commissions. Direct payment to bank account within 24–48 hours. Quality assaying at mandi gate. Price discovery across state lines (inter-mandi trading).",
+    "how_to_apply": "Register at enam.gov.in or via the eNAM mobile app. Bring Aadhaar, bank passbook, and land records to your nearest eNAM-integrated mandi for one-time registration. Some states allow online self-registration.",
+    "source_url": "https://enam.gov.in/"
+  },
+  {
+    "name": "MSP Procurement — Tur (Arhar)",
+    "authority": "Centre",
+    "stage": "selling",
+    "applicable_crops": ["Tur"],
+    "districts": ["all"],
+    "eligibility": "Farmers growing tur/arhar and selling at designated NAFED/state procurement centres during the notified procurement window.",
+    "benefit": "Guaranteed Minimum Support Price (MSP) — refer to the current year's CACP notification. Procurement happens at designated mandis when market price falls below MSP.",
+    "how_to_apply": "Register at eNAM or the state procurement portal before the season. Bring RTC, Aadhaar, bank details, and produce to the designated procurement mandi.",
+    "source_url": "https://enam.gov.in/"
+  },
+  {
+    "name": "MSP Procurement — Wheat",
+    "authority": "Centre",
+    "stage": "selling",
+    "applicable_crops": ["Wheat"],
+    "districts": ["all"],
+    "eligibility": "Farmers selling wheat at FCI/state agency procurement centres during the rabi procurement window (typically April–June).",
+    "benefit": "Guaranteed Minimum Support Price per quintal — refer to the current year's CACP notification. Payment to bank account, typically within 72 hours of sale.",
+    "how_to_apply": "Register on the state e-procurement portal (e.g. Haryana: ekharid.haryana.gov.in). Bring land records, Aadhaar, bank details, and produce to the designated mandi.",
+    "source_url": "https://dfpd.gov.in/foodgrain-procurement.htm"
+  },
+  {
+    "name": "MSP Procurement — Paddy (Rice)",
+    "authority": "Centre",
+    "stage": "selling",
+    "applicable_crops": ["Paddy"],
+    "districts": ["all"],
+    "eligibility": "Farmers selling paddy at FCI/state agency procurement centres during kharif procurement window (typically October–January).",
+    "benefit": "Guaranteed Minimum Support Price per quintal as notified by CACP/CCEA. Payment to bank account, typically within 72 hours of sale via DBS.",
+    "how_to_apply": "Register on the state e-procurement portal. Bring land records, Aadhaar, bank details, and produce to the designated procurement centre.",
+    "source_url": "https://dfpd.gov.in/foodgrain-procurement.htm"
+  },
+  {
+    "name": "Operation Greens (TOP — Tomato, Onion, Potato)",
+    "authority": "Centre",
+    "stage": "selling",
+    "applicable_crops": ["Tomato", "Onion", "Potato"],
+    "districts": ["all"],
+    "eligibility": "Farmer Producer Organisations (FPOs), agri-logistics operators, processors, and cooperatives working with tomato / onion / potato producers.",
+    "benefit": "50% subsidy on transport cost (producer cluster → consumption centre) and storage cost (up to 3 months) when market prices fall below trigger levels. Cap: ₹50 crore per project for long-term interventions.",
+    "how_to_apply": "Apply via MoFPI at pmksy.mofpi.gov.in or through state horticulture department. Requires DPR (detailed project report) for long-term projects; price-triggered benefits have a simpler claims process.",
+    "source_url": "https://mofpi.gov.in/Schemes/operation-greens"
+  }
+]

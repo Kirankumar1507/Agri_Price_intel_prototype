@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agri Price Intel — Walkthrough</title>
+    <meta name="description" content="A location-aware agricultural market intelligence platform helping Indian farmers find the best mandi to sell their crop.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-bg-pattern"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                Open Source · Zero Cost · Farmer First
+            </div>
+            <h1 class="hero-title">
+                <span class="title-line">Agri Price</span>
+                <span class="title-line title-accent">Intel</span>
+            </h1>
+            <p class="hero-subtitle">
+                Location-aware market intelligence that tells Indian farmers 
+                <strong>where to sell, when to sell, and why</strong> — 
+                using live APMC mandi data, transport-adjusted pricing, and LLM reasoning.
+            </p>
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <span class="stat-number" data-count="200">0</span>
+                    <span class="stat-label">Mandis Tracked</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" data-count="25">0</span>
+                    <span class="stat-label">Crops Covered</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" data-count="3">0</span>
+                    <span class="stat-label">Languages</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">₹0</span>
+                    <span class="stat-label">Monthly Cost</span>
+                </div>
+            </div>
+            <div class="hero-cta">
+                <a href="#problem" class="btn-primary">See How It Works</a>
+                <a href="#tech" class="btn-secondary">Tech Stack →</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+            <span>Scroll to explore</span>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="section section-dark" id="problem">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">The Problem</span>
+                <h2>Farmers lose <span class="text-red">₹thousands/quintal</span> selling at the nearest mandi instead of the best one</h2>
+            </div>
+            <div class="problem-grid">
+                <div class="problem-card" data-reveal>
+                    <div class="problem-icon">📍</div>
+                    <h3>Nearest ≠ Best</h3>
+                    <p>Farmers default to the closest APMC mandi. But a mandi 40km away might pay ₹300/qtl more — even after transport costs.</p>
+                </div>
+                <div class="problem-card" data-reveal>
+                    <div class="problem-icon">📊</div>
+                    <h3>Data Exists, Access Doesn't</h3>
+                    <p>data.gov.in publishes daily mandi prices. But no farmer checks a government API before loading their truck.</p>
+                </div>
+                <div class="problem-card" data-reveal>
+                    <div class="problem-icon">🧮</div>
+                    <h3>Nobody Does the Math</h3>
+                    <p>Modal price − ₹5/km transport = net price. This simple subtraction isn't done for the farmer anywhere.</p>
+                </div>
+                <div class="problem-card" data-reveal>
+                    <div class="problem-icon">🗣️</div>
+                    <h3>Language Barrier</h3>
+                    <p>Government scheme documents are in bureaucratic English. Farmers need explanations in their language.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="section section-light" id="solution">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">The Solution</span>
+                <h2>One search. One answer. <span class="text-green">In your language.</span></h2>
+            </div>
+
+            <!-- Feature Cards with Visual Flow -->
+            <div class="solution-flow">
+                <div class="flow-step" data-reveal>
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h3>Pick Your Crop & Location</h3>
+                        <p>Select state, crop, and search your village or landmark. The geocoder finds your exact coordinates using OpenStreetMap.</p>
+                        <div class="step-detail">
+                            <span class="detail-chip">Karnataka</span>
+                            <span class="detail-chip">Haryana</span>
+                            <span class="detail-chip chip-count">25 crops</span>
+                        </div>
+                    </div>
+                    <div class="step-visual step-visual-input">
+                        <div class="mock-sidebar">
+                            <div class="mock-field">
+                                <span class="mock-label">State</span>
+                                <select id="demo-state" class="mock-select-real">
+                                    <option value="karnataka">Karnataka</option>
+                                    <option value="haryana">Haryana</option>
+                                </select>
+                            </div>
+                            <div class="mock-field">
+                                <span class="mock-label">Crop</span>
+                                <select id="demo-crop" class="mock-select-real"></select>
+                            </div>
+                            <div class="mock-field">
+                                <span class="mock-label">Location</span>
+                                <input id="demo-location" type="text" class="mock-input-real" value="Mandya, Karnataka" placeholder="Enter your village or town…">
+                            </div>
+                            <div class="mock-btn" id="demo-btn">Get Market Intelligence</div>
+                            <div id="demo-result" class="demo-result" style="display:none;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flow-connector">
+                    <svg viewBox="0 0 24 80" fill="none"><path d="M12 0 L12 70 M6 64 L12 74 L18 64" stroke="currentColor" stroke-width="2"/></svg>
+                </div>
+
+                <div class="flow-step flow-step-reverse" data-reveal>
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h3>See the Best Mandi on a Map</h3>
+                        <p>Color-coded pins show every mandi in the state. The <strong>best mandi</strong> (highest net ₹/qtl after transport) is highlighted in dark green.</p>
+                        <div class="legend-strip">
+                            <span class="legend-item"><span class="legend-dot" style="background:#dc3545"></span> You</span>
+                            <span class="legend-item"><span class="legend-dot" style="background:#0b5d0b"></span> Best</span>
+                            <span class="legend-item"><span class="legend-dot" style="background:#2ecc40"></span> Nearest 5</span>
+                            <span class="legend-item"><span class="legend-dot" style="background:#f1c40f"></span> Reports Crop</span>
+                            <span class="legend-item"><span class="legend-dot" style="background:#1e88e5"></span> Other</span>
+                        </div>
+                    </div>
+                    <div class="step-visual step-visual-map">
+                        <div class="mock-map">
+                            <div class="map-grid"></div>
+                            <div class="map-pin pin-user" style="top:45%;left:40%">
+                                <div class="pin-pulse"></div>
+                            </div>
+                            <div class="map-pin pin-best" style="top:30%;left:60%">
+                                <span class="pin-tooltip">Mandya · ₹3,500/qtl</span>
+                            </div>
+                            <div class="map-pin pin-nearest" style="top:55%;left:35%"></div>
+                            <div class="map-pin pin-nearest" style="top:35%;left:45%"></div>
+                            <div class="map-pin pin-crop" style="top:60%;left:55%"></div>
+                            <div class="map-pin pin-other" style="top:25%;left:30%"></div>
+                            <div class="map-pin pin-other" style="top:50%;left:65%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flow-connector">
+                    <svg viewBox="0 0 24 80" fill="none"><path d="M12 0 L12 70 M6 64 L12 74 L18 64" stroke="currentColor" stroke-width="2"/></svg>
+                </div>
+
+                <div class="flow-step" data-reveal>
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h3>Get an Actionable Verdict</h3>
+                        <p>The decision engine analyzes price trends, staleness, and arbitrage gaps to produce a clear recommendation. <strong>No black box — every verdict is auditable.</strong></p>
+                        <div class="verdict-demo">
+                            <div class="verdict-card verdict-sell">
+                                <span class="verdict-badge">SELL NOW</span>
+                                <span class="verdict-conf">CONFIDENCE: HIGH</span>
+                            </div>
+                            <div class="verdict-card verdict-store">
+                                <span class="verdict-badge">STORE</span>
+                                <span class="verdict-conf">CONFIDENCE: MED</span>
+                            </div>
+                            <div class="verdict-card verdict-travel">
+                                <span class="verdict-badge">TRAVEL</span>
+                                <span class="verdict-conf">CONFIDENCE: MED</span>
+                            </div>
+                            <div class="verdict-card verdict-wait">
+                                <span class="verdict-badge">WAIT</span>
+                                <span class="verdict-conf">CONFIDENCE: LOW</span>
+                            </div>
+                            <div class="verdict-card verdict-verify">
+                                <span class="verdict-badge">VERIFY</span>
+                                <span class="verdict-conf">CONFIDENCE: LOW</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step-visual step-visual-verdict">
+                        <div class="decision-tree">
+                            <div class="dt-node dt-root">Price Data?</div>
+                            <div class="dt-branch">
+                                <div class="dt-node dt-check">Stale >14d?</div>
+                                <div class="dt-node dt-check">Trend ≤−5%?</div>
+                                <div class="dt-node dt-check">Trend ≥+5%?</div>
+                                <div class="dt-node dt-check">Arb >₹150?</div>
+                            </div>
+                            <div class="dt-results">
+                                <span class="dt-result dt-verify">verify</span>
+                                <span class="dt-result dt-sell">sell_now</span>
+                                <span class="dt-result dt-store">store</span>
+                                <span class="dt-result dt-travel">travel</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flow-connector">
+                    <svg viewBox="0 0 24 80" fill="none"><path d="M12 0 L12 70 M6 64 L12 74 L18 64" stroke="currentColor" stroke-width="2"/></svg>
+                </div>
+
+                <div class="flow-step flow-step-reverse" data-reveal>
+                    <div class="step-number">04</div>
+                    <div class="step-content">
+                        <h3>Understand Schemes in Plain Language</h3>
+                        <p>Government schemes like PM-KISAN, PMFBY, and Raitha Siri are rewritten by an LLM into <strong>plain Kannada, Hindi, or English</strong> — with step-by-step "how to apply" instructions.</p>
+                        <div class="scheme-chips">
+                            <span class="scheme-chip scheme-growing">PM-KISAN</span>
+                            <span class="scheme-chip scheme-growing">Raitha Siri</span>
+                            <span class="scheme-chip scheme-insurance">PMFBY</span>
+                            <span class="scheme-chip scheme-selling">MSP Procurement</span>
+                            <span class="scheme-chip scheme-selling">Operation Greens</span>
+                        </div>
+                    </div>
+                    <div class="step-visual step-visual-scheme">
+                        <div class="mock-scheme">
+                            <div class="scheme-header">
+                                <span class="scheme-name">Raitha Siri (Millet Incentive)</span>
+                                <span class="scheme-tag">Karnataka</span>
+                            </div>
+                            <div class="scheme-body">
+                                <div class="scheme-section">
+                                    <strong>What you get</strong>
+                                    <p>₹10,000/hectare for growing millets (Ragi, Jowar, Bajra)</p>
+                                </div>
+                                <div class="scheme-section">
+                                    <strong>How to apply</strong>
+                                    <p>1. Visit your Raitha Samparka Kendra<br>
+                                    2. Bring RTC + Aadhaar + bank passbook<br>
+                                    3. Get crop survey confirmed</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section class="section section-dark" id="tech">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Tech Stack</span>
+                <h2>Built with <span class="text-green">free, open tools</span> — runs on a laptop</h2>
+            </div>
+            <div class="tech-grid">
+                <div class="tech-card" data-reveal>
+                    <div class="tech-layer-label">Frontend</div>
+                    <div class="tech-item"><span class="tech-icon">🖥️</span> Streamlit</div>
+                    <div class="tech-item"><span class="tech-icon">🗺️</span> Folium + Leaflet</div>
+                    <div class="tech-item"><span class="tech-icon">📊</span> Pandas + Charts</div>
+                </div>
+                <div class="tech-card" data-reveal>
+                    <div class="tech-layer-label">Data Sources</div>
+                    <div class="tech-item"><span class="tech-icon">🏛️</span> data.gov.in (Agmarknet)</div>
+                    <div class="tech-item"><span class="tech-icon">🌤️</span> Open-Meteo</div>
+                    <div class="tech-item"><span class="tech-icon">🌊</span> NOAA CPC + PSL</div>
+                    <div class="tech-item"><span class="tech-icon">📍</span> Nominatim (OSM)</div>
+                </div>
+                <div class="tech-card" data-reveal>
+                    <div class="tech-layer-label">Intelligence</div>
+                    <div class="tech-item"><span class="tech-icon">🤖</span> Ollama (Local LLM)</div>
+                    <div class="tech-item"><span class="tech-icon">⚙️</span> Rule-Based Verdicts</div>
+                    <div class="tech-item"><span class="tech-icon">💾</span> File-backed Cache</div>
+                </div>
+                <div class="tech-card" data-reveal>
+                    <div class="tech-layer-label">Languages</div>
+                    <div class="tech-item"><span class="tech-icon">🐍</span> Python 3.11+</div>
+                    <div class="tech-item"><span class="tech-icon">🌐</span> English · ಕನ್ನಡ · हिन्दी</div>
+                    <div class="tech-item"><span class="tech-icon">🔑</span> Free API Keys Only</div>
+                </div>
+            </div>
+
+            <div class="arch-highlight" data-reveal>
+                <h3>Why Deterministic + LLM Hybrid?</h3>
+                <div class="arch-columns">
+                    <div class="arch-col">
+                        <div class="arch-col-header arch-deterministic">⚙️ Decision Engine (Deterministic)</div>
+                        <ul>
+                            <li>Trend ≤ −5% → Sell Now</li>
+                            <li>Trend ≥ +5% → Store</li>
+                            <li>Arb gap > ₹150/qtl → Travel</li>
+                            <li>Data > 14 days old → Verify</li>
+                            <li>No signal → Wait</li>
+                        </ul>
+                        <p class="arch-note">Auditable. Reproducible. No hallucination.</p>
+                    </div>
+                    <div class="arch-divider">
+                        <span>+</span>
+                    </div>
+                    <div class="arch-col">
+                        <div class="arch-col-header arch-llm">🤖 LLM Layer (Ollama)</div>
+                        <ul>
+                            <li>Market overview narrative</li>
+                            <li>Verdict headline sentence</li>
+                            <li>Scheme plain-English rewrite</li>
+                            <li>Crop info section</li>
+                            <li>Multi-language translation</li>
+                        </ul>
+                        <p class="arch-note">Natural language. Farmer-friendly. Localized.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Pipeline Section -->
+    <section class="section section-accent" id="pipeline">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Data Pipeline</span>
+                <h2>From <span class="text-dark">API to Action</span> in one click</h2>
+            </div>
+            <div class="pipeline-flow" data-reveal>
+                <div class="pipe-step">
+                    <div class="pipe-icon">🏛️</div>
+                    <div class="pipe-label">Agmarknet API</div>
+                    <div class="pipe-detail">90-day price window<br>2000 records/call</div>
+                </div>
+                <div class="pipe-arrow">→</div>
+                <div class="pipe-step">
+                    <div class="pipe-icon">🧹</div>
+                    <div class="pipe-label">Normalize</div>
+                    <div class="pipe-detail">Group by market<br>Latest price per mandi</div>
+                </div>
+                <div class="pipe-arrow">→</div>
+                <div class="pipe-step">
+                    <div class="pipe-icon">📍</div>
+                    <div class="pipe-label">Geocode</div>
+                    <div class="pipe-detail">District centroid<br>Nominatim + cache</div>
+                </div>
+                <div class="pipe-arrow">→</div>
+                <div class="pipe-step">
+                    <div class="pipe-icon">📏</div>
+                    <div class="pipe-label">Distance</div>
+                    <div class="pipe-detail">Haversine km<br>₹5/km deduction</div>
+                </div>
+                <div class="pipe-arrow">→</div>
+                <div class="pipe-step">
+                    <div class="pipe-icon">🏆</div>
+                    <div class="pipe-label">Rank</div>
+                    <div class="pipe-detail">Best net ₹/qtl<br>in nearest 5</div>
+                </div>
+                <div class="pipe-arrow">→</div>
+                <div class="pipe-step">
+                    <div class="pipe-icon">⚖️</div>
+                    <div class="pipe-label">Verdict</div>
+                    <div class="pipe-detail">sell / store /<br>travel / wait / verify</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tabs/Features Detail Section -->
+    <section class="section section-light" id="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Dashboard Tabs</span>
+                <h2>Everything a farmer needs, <span class="text-green">in four tabs</span></h2>
+            </div>
+            <div class="tabs-showcase">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="intel">Market Intel</button>
+                    <button class="tab-btn" data-tab="production">Production (APY)</button>
+                    <button class="tab-btn" data-tab="weather">Weather & Climate</button>
+                    <button class="tab-btn" data-tab="schemes">Schemes</button>
+                </div>
+                <div class="tab-panels">
+                    <div class="tab-panel active" id="tab-intel">
+                        <div class="panel-content">
+                            <h3>Market Intelligence</h3>
+                            <div class="feature-list">
+                                <div class="feature-item">
+                                    <span class="feature-check">✓</span>
+                                    <span>LLM-generated market overview narrative</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-check">✓</span>
+                                    <span>Mandi table sorted by distance</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-check">✓</span>
+                                    <span>15-day price trend chart (multi-mandi comparison)</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-check">✓</span>
+                                    <span>Best mandi vs nearest — with ₹/qtl delta</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-visual">
+                            <div class="mock-chart">
+                                <div class="chart-title">15-Day Price Trend — Ragi (₹/qtl)</div>
+                                <div class="chart-area">
+                                    <svg viewBox="0 0 300 120" class="trend-line">
+                                        <polyline points="10,90 40,85 70,70 100,75 130,60 160,55 190,50 220,45 250,40 280,35" fill="none" stroke="#0b5d0b" stroke-width="2.5"/>
+                                        <polyline points="10,80 40,82 70,78 100,80 130,72 160,70 190,65 220,62 250,58 280,55" fill="none" stroke="#2ecc40" stroke-width="2" stroke-dasharray="5,3"/>
+                                    </svg>
+                                </div>
+                                <div class="chart-legend">
+                                    <span><span class="legend-line" style="background:#0b5d0b"></span> Mandya</span>
+                                    <span><span class="legend-line" style="background:#2ecc40"></span> Mysuru</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-panel" id="tab-production">
+                        <div class="panel-content">
+                            <h3>Production (APY) — 1997 to 2014</h3>
+                            <div class="feature-list">
+                                <div class="feature-item">
+                                    <span class="feature-check">✓</span>
+                                    <span>Area, Production, Yield metrics with YoY delta</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-check">✓</span>
+                                    <span>Multi-decade yield trend chart</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-check">✓</span>
+                                    <span>Area & production overlay</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-check">⚠️</span>
+                                    <span>DES data frozen at 2014 — transparently noted</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-visual">
+                            <div class="mock-metrics">
+                                <div class="mock-metric"><span class="mm-value">2014</span><span class="mm-label">Year</span></div>
+                                <div class="mock-metric"><span class="mm-value">845 kha</span><span class="mm-label">Area</span></div>
+                                <div class="mock-metric"><span class="mm-value">1,420 kt</span><span class="mm-label">Production</span><span class="mm-delta positive">+4.2% YoY</span></div>
+                                <div class="mock-metric"><span class="mm-value">1,680 kg/ha</span><span class="mm-label">Yield</span><span class="mm-delta positive">+2.1% YoY</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-panel" id="tab-weather">
+                        <div class="panel-content">
+                            <h3>Weather & Climate</h3>
+                            <div class="feature-list">
+                                <div class="feature-item">
+                                    <span class="feature-check">✓</span>
+                                    <span>ENSO phase + IOD signal (NOAA live data)</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-check">✓</span>
+                                    <span>7-day temperature + rainfall forecast (Open-Meteo)</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-check">✓</span>
+                                    <span>Crop calendar — sow, transplant, harvest windows</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-check">✓</span>
+                                    <span>Critical weather alerts per crop-state pair</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-visual">
+                            <div class="mock-weather">
+                                <div class="weather-chips">
+                                    <span class="weather-chip chip-neutral">ENSO: Neutral (−0.16, JFM 2026)</span>
+                                    <span class="weather-chip chip-negative">IOD: Negative (−0.42, Oct 2025)</span>
+                                </div>
+                                <div class="crop-cal">
+                                    <div class="cal-item"><span class="cal-label">Sow</span><span class="cal-value">Jun–Jul</span></div>
+                                    <div class="cal-item"><span class="cal-label">Harvest</span><span class="cal-value">Oct–Nov</span></div>
+                                    <div class="cal-item cal-critical"><span class="cal-label">Critical</span><span class="cal-value">600–1000mm in Jul–Aug</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-panel" id="tab-schemes">
+                        <div class="panel-content">
+                            <h3>Government Schemes</h3>
+                            <div class="feature-list">
+                                <div class="feature-item">
+                                    <span class="feature-check">✓</span>
+                                    <span>Scheme matching by crop (growing → insurance → selling)</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-check">✓</span>
+                                    <span>LLM plain-language explainer ("What you get" / "How to apply")</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-check">✓</span>
+                                    <span>Context-aware use cases ("When it helps you")</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-check">✓</span>
+                                    <span>Source URLs for verification</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-visual">
+                            <div class="mock-scheme-list">
+                                <div class="scheme-stage">
+                                    <span class="stage-label stage-growing">Before & during growing</span>
+                                    <div class="stage-items">PM-KISAN · Raitha Siri</div>
+                                </div>
+                                <div class="scheme-stage">
+                                    <span class="stage-label stage-insurance">Protect your crop</span>
+                                    <div class="stage-items">PMFBY</div>
+                                </div>
+                                <div class="scheme-stage">
+                                    <span class="stage-label stage-selling">At selling time</span>
+                                    <div class="stage-items">MSP Procurement · Operation Greens</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap / Next Steps -->
+    <section class="section section-dark" id="roadmap">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">What's Next</span>
+                <h2>From prototype to <span class="text-green">farmer's daily tool</span></h2>
+            </div>
+            <div class="roadmap-grid">
+                <div class="roadmap-card roadmap-now" data-reveal>
+                    <div class="roadmap-phase">Now</div>
+                    <h3>Working Prototype</h3>
+                    <ul>
+                        <li>2 states (Karnataka, Haryana)</li>
+                        <li>25 crops · 200+ mandis</li>
+                        <li>Live mandi prices + LLM verdicts</li>
+                        <li>3 languages</li>
+                    </ul>
+                </div>
+                <div class="roadmap-card roadmap-next" data-reveal>
+                    <div class="roadmap-phase">Next</div>
+                    <h3>Scale & Polish</h3>
+                    <ul>
+                        <li>All-India coverage (28 states)</li>
+                        <li>MSP comparison overlay</li>
+                        <li>Road distance via OSRM (not haversine)</li>
+                        <li>More government schemes (eNAM, KCC, PM-KUSUM)</li>
+                    </ul>
+                </div>
+                <div class="roadmap-card roadmap-future" data-reveal>
+                    <div class="roadmap-phase">Future</div>
+                    <h3>Farmer-First Channels</h3>
+                    <ul>
+                        <li>WhatsApp bot for price alerts</li>
+                        <li>SMS fallback for non-smartphone users</li>
+                        <li>ML price forecasting (7-day ahead)</li>
+                        <li>FPO/aggregator bulk view</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA / Footer -->
+    <section class="section section-cta" id="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>The data is public. The math is simple.<br><span class="text-green">Nobody is doing it for the farmer.</span></h2>
+                <p>Built as a proof-of-concept. Open for collaboration.</p>
+                <div class="cta-stack">
+                    <span class="cta-chip">Python</span>
+                    <span class="cta-chip">Streamlit</span>
+                    <span class="cta-chip">Folium</span>
+                    <span class="cta-chip">Ollama</span>
+                    <span class="cta-chip">data.gov.in</span>
+                    <span class="cta-chip">Open-Meteo</span>
+                    <span class="cta-chip">NOAA</span>
+                </div>
+                <div class="cta-tags">#AgriTech #India #OpenData #LLM #FarmerFirst #APMC</div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <span>Agri Price Intel — Built with ❤️ for Indian farmers</span>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
