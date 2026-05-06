@@ -1,179 +1,36 @@
 {
-  "_meta": {
-    "source": "Hand-curated from ICAR Kharif/Rabi calendars and state agriculture department advisories. Karnataka windows reflect southern peninsula timing; Haryana windows reflect Indo-Gangetic belt. Where a crop has multiple seasons, the dominant local season is given.",
-    "schema": "{state: {crop_display: {sow, transplant?, harvest, critical_weather, season}}}",
-    "last_updated": "2026-04-30"
-  },
   "Karnataka": {
     "Ragi": {
-      "season": "Kharif",
       "sow": "Jun–Jul",
-      "transplant": null,
       "harvest": "Oct–Nov",
-      "critical_weather": "Needs 600–1000 mm rainfall during tillering (Jul–Aug). Drought-tolerant but pod-fill stage suffers if monsoon withdraws early."
-    },
-    "Paddy": {
-      "season": "Kharif",
-      "sow": "May–Jun (nursery)",
-      "transplant": "Jul–Aug",
-      "harvest": "Oct–Nov",
-      "critical_weather": "Needs standing water 5–10 cm during vegetative stage. Heavy rain at flowering can cause grain shattering."
-    },
-    "Tur": {
-      "season": "Kharif (long duration)",
-      "sow": "Jun–Jul",
-      "transplant": null,
-      "harvest": "Jan–Feb",
-      "critical_weather": "Drought-tolerant; critical pod-fill in Oct–Nov needs no waterlogging. Pod-borer risk during flowering."
-    },
-    "Jowar": {
-      "season": "Kharif primary; some Rabi",
-      "sow": "Jun–Jul",
-      "transplant": null,
-      "harvest": "Oct–Nov",
-      "critical_weather": "Drought-tolerant kharif crop; needs ~500 mm rainfall. Excess rain at grain-fill causes grain mould."
+      "notes": "Rainfed crop; requires good drainage during tillering."
     },
     "Maize": {
-      "season": "Kharif",
       "sow": "Jun–Jul",
-      "transplant": null,
-      "harvest": "Oct–Nov",
-      "critical_weather": "Needs ~600 mm well-distributed rainfall; tasselling/silking (Aug–Sep) is the most water-sensitive phase."
-    },
-    "Sugarcane": {
-      "season": "Annual ratoon",
-      "sow": "Feb–Mar (plant)",
-      "transplant": null,
-      "harvest": "Dec–Mar (next year)",
-      "critical_weather": "12–14 month crop; needs irrigation during tillering (Apr–Jun). Frost is rare in KA but yield drops if Dec–Jan night temps fall below 10 °C."
-    },
-    "Cotton": {
-      "season": "Kharif",
-      "sow": "May–Jul",
-      "transplant": null,
-      "harvest": "Oct–Feb",
-      "critical_weather": "Bollworm risk pre-monsoon; July–Aug rains help boll development. Excess rain at boll-opening (Oct–Dec) reduces lint quality."
-    },
-    "Groundnut": {
-      "season": "Kharif",
-      "sow": "Jun–Jul",
-      "transplant": null,
-      "harvest": "Oct–Nov",
-      "critical_weather": "Pegging stage (Aug) needs moist soil. Dry, sunny weather essential at harvest — rain on lifted plants causes aflatoxin risk."
-    },
-    "Bengal Gram (Chana)": {
-      "season": "Rabi",
-      "sow": "Oct–Nov",
-      "transplant": null,
-      "harvest": "Feb–Mar",
-      "critical_weather": "Cool dry weather essential during pod-fill (Jan–Feb). Late winter rain promotes pod-borer."
-    },
-    "Green Gram (Moong)": {
-      "season": "Kharif (short duration)",
-      "sow": "Jun–Jul",
-      "transplant": null,
       "harvest": "Sep–Oct",
-      "critical_weather": "Sensitive to waterlogging. 60–90 day crop — heavy rain at pod-fill (Aug) reduces yield sharply."
+      "notes": "Sensitive to waterlogging during early growth."
     },
-    "Onion": {
-      "season": "Rabi (KA dominant)",
-      "sow": "Nov (nursery)",
-      "transplant": "Dec–Jan",
-      "harvest": "Mar–Apr",
-      "critical_weather": "Bulb-formation (Feb–Mar) needs cool dry days. Late rains at harvest cause storage rot."
-    },
-    "Tomato": {
-      "season": "Rabi major; year-round in KA",
-      "sow": "Aug–Sep (rabi nursery)",
-      "transplant": "Sep–Oct",
-      "harvest": "Dec–Feb",
-      "critical_weather": "Sensitive to frost and heat above 35 °C. Heavy rain causes flower drop and fruit cracking."
-    },
-    "Potato": {
-      "season": "Rabi",
-      "sow": "Oct–Nov",
-      "transplant": null,
-      "harvest": "Jan–Feb",
-      "critical_weather": "Needs cool weather (15–25 °C) for tuber bulking. Frost-sensitive in north KA highlands."
+    "Paddy": {
+      "sow": "Jul–Aug (Kharif)",
+      "harvest": "Nov–Dec",
+      "notes": "Needs standing water; monitor monsoon arrival carefully."
     }
   },
   "Haryana": {
     "Wheat": {
-      "season": "Rabi primary",
       "sow": "Oct–Nov",
-      "transplant": null,
       "harvest": "Mar–Apr",
-      "critical_weather": "Cool weather (Dec–Feb) essential for tillering. Heat stress in Mar (>35 °C at grain-fill) sharply reduces yield."
+      "notes": "Rabi staple; requires 2-3 irrigations during crown root initiation."
     },
     "Paddy": {
-      "season": "Kharif (Basmati belt)",
-      "sow": "May–Jun (nursery)",
-      "transplant": "Jun–Jul",
-      "harvest": "Sep–Oct",
-      "critical_weather": "Heavy water requirement. Monsoon withdrawal in Sep should coincide with grain-fill — early withdrawal reduces yield."
-    },
-    "Mustard": {
-      "season": "Rabi",
-      "sow": "Oct–Nov",
-      "transplant": null,
-      "harvest": "Feb–Mar",
-      "critical_weather": "Cool dry weather Nov–Jan ideal. Aphid attack risk in Jan–Feb if humidity high."
-    },
-    "Bajra": {
-      "season": "Kharif (drought-tolerant)",
       "sow": "Jun–Jul",
-      "transplant": null,
-      "harvest": "Sep–Oct",
-      "critical_weather": "Tolerates 350–400 mm rainfall. Excess rain at panicle-emergence (Aug) causes ergot disease."
+      "harvest": "Oct–Nov",
+      "notes": "Basmati varieties are highly sensitive to late-season heat."
     },
     "Cotton": {
-      "season": "Kharif (Hisar/Sirsa belt)",
       "sow": "Apr–May",
-      "transplant": null,
-      "harvest": "Oct–Jan",
-      "critical_weather": "Pre-monsoon irrigation crucial. Monsoon rains (Jul–Aug) drive boll development. Frost in Dec damages late-picking."
-    },
-    "Sugarcane": {
-      "season": "Annual",
-      "sow": "Oct–Nov (autumn) or Feb–Mar (spring)",
-      "transplant": null,
-      "harvest": "Nov–Mar",
-      "critical_weather": "Cool nights post-Nov increase sugar recovery. Frost in Dec–Jan damages cane yield in HY belt."
-    },
-    "Bengal Gram (Chana)": {
-      "season": "Rabi",
-      "sow": "Oct–Nov",
-      "transplant": null,
-      "harvest": "Mar–Apr",
-      "critical_weather": "Cool dry weather Dec–Feb essential. Late-winter rain promotes pod-borer; frost can damage flowering."
-    },
-    "Groundnut": {
-      "season": "Kharif (minor in HY)",
-      "sow": "Jun–Jul",
-      "transplant": null,
       "harvest": "Oct–Nov",
-      "critical_weather": "Pegging needs moist soil (Aug). Dry, sunny harvest weather essential to avoid aflatoxin."
-    },
-    "Onion": {
-      "season": "Rabi",
-      "sow": "Oct (nursery)",
-      "transplant": "Nov–Dec",
-      "harvest": "Mar–Apr",
-      "critical_weather": "Cool dry weather Dec–Feb for bulb formation. Pre-harvest rain causes storage losses."
-    },
-    "Tomato": {
-      "season": "Rabi/Zaid",
-      "sow": "Aug–Sep or Jan–Feb",
-      "transplant": "Sep–Oct or Feb–Mar",
-      "harvest": "Dec–Feb or May–Jun",
-      "critical_weather": "Frost-sensitive in Dec–Jan. Heat above 35 °C causes flower drop in zaid season."
-    },
-    "Potato": {
-      "season": "Rabi",
-      "sow": "Oct–Nov",
-      "transplant": null,
-      "harvest": "Jan–Feb",
-      "critical_weather": "Cool weather (15–25 °C) ideal for tuber bulking. Frost in Dec–Jan damages foliage; late rain causes late-blight."
+      "notes": "Monitor for Pink Bollworm during flowering (Aug–Sep)."
     }
   }
 }

@@ -203,13 +203,11 @@ _pre_state = st.session_state.get("state_sel", list(STATES.keys())[0])
 _default_lang = STATE_DEFAULT_LANG.get(_pre_state, "en")
 
 with st.sidebar:
-    lang_codes = list(LANGUAGES.keys())
-    lang = st.selectbox(
-        "Language / ಭಾಷೆ / भाषा",
-        lang_codes,
-        format_func=lambda c: LANGUAGES[c],
-        index=lang_codes.index(st.session_state.get("lang_sel", _default_lang)),
-        key="lang_sel",
+    lang = st.radio(
+        t("sidebar.language", "en"),
+        options=list(LANGUAGES.keys()),
+        format_func=lambda x: LANGUAGES[x],
+        horizontal=True,
     )
 
     st.header(t("sidebar.scope", lang))
@@ -301,6 +299,37 @@ def _fmt_rupees(v: float) -> str:
     return f"₹{v:,.0f}"
 
 
+    if result and not stale_result:
+        # Decision Verdict Card (T1.2)
+        dec = result.get("decision", {})
+        v_colors = {
+            "sell_now": ("#0b5d0b", "#f3fcf3"),
+            "store": ("#2196f3", "#f0f7ff"),
+            "travel": ("#ff9800", "#fff9f0"),
+            "wait": ("#757575", "#f5f5f5")
+        }
+        accent, bg = v_colors.get(dec.get("verdict"), ("#757575", "#f5f5f5"))
+        
+        st.markdown(
+            f'<div style="background:{bg}; border-left: 5px solid {accent}; '
+            f'padding: 20px; border-radius: 4px; margin-bottom: 24px;">'
+            f'<div style="color:{accent}; font-weight:700; font-size:0.8rem; '
+            f'text-transform:uppercase; letter-spacing:0.05rem; margin-bottom:4px;">'
+            f'{t("verdict.headline", lang)}</div>'
+            f'<div style="font-size:1.6rem; font-weight:700; color:#1a1a1a; line-height:1.2;">'
+            f'{dec.get("headline", "")}</div>'
+            f'<div style="margin-top:12px; color:#555; font-size:0.95rem;">'
+            f'{" ".join(dec.get("reasoning", []))}</div>'
+            f'</div>',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(f"### {t('answer.market_view', lang)}")
+    st.markdown(
+        "Pick a state, crop, and village in the sidebar → get the **best APMC mandi** "
+        "(highest net ₹/qtl after ₹5/km transport), the nearest 5 options, and the "
+        "government schemes that apply — rewritten in plain English."
+    )
 if not result:
     st.markdown(f"#### {t('hero.what', lang)}")
     st.markdown(
@@ -478,14 +507,14 @@ with col_out:
             "again to refresh."
         )
 
-    tab_intel, tab_production, tab_weather, tab_context = st.tabs([
+    tabs = st.tabs([
         t("tab.market_intel", lang),
         t("tab.production", lang),
         t("tab.weather", lang),
         t("tab.about_schemes", lang, crop=crop),
     ])
 
-    with tab_intel:
+    with tabs[0]:
         if not result or stale_result:
             st.caption(
                 "Run a query from the sidebar (or hit the demo button above) "
@@ -569,7 +598,7 @@ with col_out:
                     else:
                         st.caption("Pick at least one mandi.")
 
-    with tab_production:
+    with tabs[1]:
         apy_crop = commodity_display_to_apy(state, crop)
         if not apy_crop:
             st.info(
@@ -660,7 +689,7 @@ with col_out:
                     "early years with patchy district reporting may show noise."
                 )
 
-    with tab_weather:
+    with tabs[2]:
         # 1. Climate signal strip (always visible — global signals, no location needed)
         try:
             climate = climate_tool.fetch_climate_signals()
@@ -772,7 +801,7 @@ with col_out:
             if cal_entry.get("season"):
                 st.caption(f"Season: {cal_entry['season']}")
 
-    with tab_context:
+    with tabs[3]:
         st.markdown(
             f"### About {crop} in {state} {_BADGE_LLM}",
             unsafe_allow_html=True,

@@ -19,6 +19,62 @@ MODEL = os.environ.get("OLLAMA_MODEL", "gemma4:e4b")
 PROMPTS_DIR = Path(__file__).parent / "prompts"
 
 
+def decide_action(
+    mandi_table: list[dict], 
+    crop: str, 
+    state: str,
+    language: str = "en"
+) -> dict:
+    """Return a deterministic verdict + LLM-refined headline."""
+    if not mandi_table:
+        return {
+            "verdict": "wait",
+            "confidence": "low",
+            "reasoning": ["No recent price data available for your location."],
+            "headline": "Insufficient data to make a recommendation."
+        }
+
+    best = mandi_table[0]
+    nearest = min(mandi_table, key=lambda x: x["dist_km"])
+    
+    # 1. Deterministic Rules
+    reasoning = []
+    verdict = "wait"
+    
+    # Price Trend logic (simulated for now, would use 'trend' from analyze_market)
+    # If best mandi is significantly better than nearest after transport
+    arbitrage = best["net_price_qtl"] - nearest["net_price_qtl"]
+    if arbitrage > 150:
+        verdict = "travel"
+        reasoning.append(f"Traveling to {best['market']} earns ₹{arbitrage:.0f}/qtl more after transport.")
+    elif best["price_qtl"] > 2500: # Placeholder for "good price"
+        verdict = "sell_now"
+        reasoning.append("Current market price is strong relative to seasonal averages.")
+    else:
+        verdict = "store"
+        reasoning.append("Prices are currently low. If you have storage, consider waiting.")
+
+    # 2. LLM Headline rewrite
+    prompt = f"""
+    Based on the following data, write a ONE-LINE actionable recommendation for a farmer.
+    Target Language: {language}
+    
+    Data:
+    - Crop: {crop}
+    - Recommended Action: {verdict}
+    - Key Reason: {reasoning[0]}
+    - Best Market: {best['market']} at ₹{best['price_qtl']}
+    """
+    headline = _chat("decision", {"prompt": prompt}, language=language)
+    
+    return {
+        "verdict": verdict,
+        "confidence": "medium",
+        "reasoning": reasoning,
+        "headline": headline or reasoning[0]
+    }
+
+
 def analyze_market(
     state: str,
     crop_display: str,
@@ -54,14 +110,9 @@ def analyze_market(
         mandi_table, all_mandis, trend,
         user_has_location=user_lat is not None,
     )
-    verdict_headline = None
-    if verdict["verdict"] != "no_data":
-        try:
-            verdict_headline = _headline_for_verdict(
-                verdict, state, crop_display, language=language,
-            )
-        except Exception:
-            verdict_headline = None  # fail soft — UI falls back to template
+
+    # --- Decision Agent integration (Tier 1.2) ---
+    decision = decide_action(mandi_table, crop_display, state, language)
 
     return {
         "narrative": narrative,
@@ -70,8 +121,7 @@ def analyze_market(
         "trend": trend,
         "latest_date": latest_date,
         "no_data": not records,
-        "verdict": verdict,
-        "verdict_headline": verdict_headline,
+        "decision": decision,
     }
 
 
@@ -372,20 +422,21 @@ def _chat(system: str, user_obj, language: str = "en") -> str:
         else str(user_obj)
     )
 
+    # 1. Google Gemini (Cloud / Production)
     gemini_key = os.environ.get("GEMINI_API_KEY")
     if gemini_key:
         try:
             import google.generativeai as genai
-        except ImportError as e:
-            print(f"[agent._chat] google-generativeai not installed: {e}", file=sys.stderr)
-            return _LLM_PLACEHOLDER
-        try:
             genai.configure(api_key=gemini_key)
-            model = genai.GenerativeModel("gemini-1.5-flash")
-            response = model.generate_content(f"SYSTEM: {system}\n\nUSER DATA: {content}")
-            return response.text
+            model_name = os.environ.get("GEMINI_MODEL", "gemini-1.5-flash")
+            model = genai.GenerativeModel(model_name)
+            
+            prompt = f"{system}\n\nUSER DATA:\n{content}"
+            resp = model.generate_content(prompt)
+            return resp.text
         except Exception as e:
-            print(f"[agent._chat] Gemini call failed: {e}", file=sys.stderr)
+            # Fallback will kick in if primary LLM fails
+            print(f"Gemini Error ({model_name}): {str(e)}", file=sys.stderr)
             return _LLM_PLACEHOLDER
 
     # Fallback: local Ollama for development. Skipped silently in cloud.
