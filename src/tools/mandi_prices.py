@@ -72,10 +72,14 @@ def fetch_all_mandis_for_state(state: str) -> list[dict]:
         return cached
 
     # 3. Fetch from API (Slowest)
+    api_key = _get_key()
+    if not api_key:
+        return []
+
     resp = requests.get(
         BASE_URL,
         params={
-            "api-key": _get_key(),
+            "api-key": api_key,
             "format": "json",
             "limit": 2000,
             "filters[State]": state,
