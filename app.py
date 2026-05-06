@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import folium
 import pandas as pd
+import os
 import streamlit as st
 from dotenv import load_dotenv
 from streamlit_folium import st_folium
@@ -242,6 +243,15 @@ with st.sidebar:
         st.info(t("sidebar.no_matches", lang))
 
     st.divider()
+    # API key status indicator
+    has_data_key = os.environ.get("DATA_GOV_API_KEY")
+    has_ai_key = os.environ.get("GEMINI_API_KEY")
+    
+    if not has_data_key:
+        st.warning("⚠️ DATA_GOV_API_KEY missing. App will only show demo data.")
+    if not has_ai_key:
+        st.info("ℹ️ GEMINI_API_KEY missing. Narratives will be unavailable.")
+
     go = st.button(
         t("sidebar.get_intel", lang),
         type="primary",
