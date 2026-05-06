@@ -61,6 +61,16 @@ LABELS = {
         "en": "Crop Calendar",
         "kn": "ಬೆಳೆ ಕ್ಯಾಲೆಂಡರ್",
         "hi": "फसल कैलेंडर"
+    },
+    "tab.news": {
+        "en": "News & Advisories",
+        "kn": "ಸುದ್ದಿ ಮತ್ತು ಸಲಹೆಗಳು",
+        "hi": "समाचार और परामर्श"
+    },
+    "verdict.hear": {
+        "en": "🔊 Hear the recommendation",
+        "kn": "🔊 ಶಿಫಾರಸನ್ನು ಕೇಳಿ",
+        "hi": "🔊 सिफारिश सुनें"
     }
 }
 

@@ -300,7 +300,7 @@ def _fmt_rupees(v: float) -> str:
 
 
     if result and not stale_result:
-        # Decision Verdict Card (T1.2)
+        # Decision Verdict Card (T1.2) + TTS (T3.1)
         dec = result.get("decision", {})
         v_colors = {
             "sell_now": ("#0b5d0b", "#f3fcf3"),
@@ -323,6 +323,12 @@ def _fmt_rupees(v: float) -> str:
             f'</div>',
             unsafe_allow_html=True
         )
+        
+        # TTS Button (T3.1)
+        if st.button(t("verdict.hear", lang)):
+            from src.tools import tts
+            audio = tts.get_audio_bytes(dec.get("headline", ""), lang)
+            st.audio(audio, format="audio/mp3")
 
         st.markdown(f"### {t('answer.market_view', lang)}")
     st.markdown(
@@ -511,6 +517,7 @@ with col_out:
         t("tab.market_intel", lang),
         t("tab.production", lang),
         t("tab.weather", lang),
+        t("tab.news", lang), # T2.2
         t("tab.about_schemes", lang, crop=crop),
     ])
 
@@ -802,10 +809,24 @@ with col_out:
                 st.caption(f"Season: {cal_entry['season']}")
 
     with tabs[3]:
+        # News & Advisories (T2.2)
+        from src.tools import news
+        news_items = news.fetch_agri_news(state, lang)
+        for item in news_items:
+            st.markdown(
+                f"**{item['title']}**\n\n"
+                f"_{item['source']} · {item['date']}_\n\n"
+                f"{item['summary']}\n\n"
+                f"[Read more]({item['link']})\n\n"
+                "---"
+            )
+
+    with tabs[4]:
         st.markdown(
             f"### About {crop} in {state} {_BADGE_LLM}",
             unsafe_allow_html=True,
         )
+        # ... (rest of about content)
         with st.spinner("Generating info section..."):
             try:
                 st.markdown(info_section(state, crop, language=lang))
@@ -873,3 +894,13 @@ with col_out:
                                     st.error(f"LLM failed: {e}")
                         else:
                             st.caption("Click above for layman explanation + use cases.")
+
+if st.query_params.get("mode") == "admin":
+    st.divider()
+    st.subheader("🛠 Portfolio Mode (Admin)")
+    if "admin_logs" in st.session_state and st.session_state.admin_logs:
+        log_df = pd.DataFrame(st.session_state.admin_logs)
+        st.dataframe(log_df, use_container_width=True, hide_index=True)
+        st.caption("Instrumentation tracks real-time latencies and cache performance.")
+    else:
+        st.info("No system calls recorded yet this session.")
