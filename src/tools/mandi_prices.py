@@ -22,10 +22,14 @@ def fetch_prices(state: str, commodity_api: str, days: int = WINDOW_DAYS) -> lis
     if cached is not None:
         return cached
 
+    api_key = _get_key()
+    if not api_key:
+        return []
+
     resp = requests.get(
         BASE_URL,
         params={
-            "api-key": _get_key(),
+            "api-key": api_key,
             "format": "json",
             "limit": 2000,
             "filters[State]": state,
@@ -48,16 +52,26 @@ def fetch_prices(state: str, commodity_api: str, days: int = WINDOW_DAYS) -> lis
 
 
 def fetch_all_mandis_for_state(state: str) -> list[dict]:
-    """Return unique {market, district} pairs active in the state (any commodity). 24h cached.
-
-    Used as the base layer for map rendering — includes mandis that don't report the
-    currently selected crop. Single API call, no commodity filter, sorted newest first.
+    """Return unique {market, district} pairs active in the state. 
+    Checks data/mandi_lists.json first, then local cache, then API.
     """
+    # 1. Check pre-seeded static list (FASTEST for Live Demo)
+    seed_path = Path("data/mandi_lists.json")
+    if seed_path.exists():
+        try:
+            lists = json.loads(seed_path.read_text())
+            if state in lists:
+                return lists[state]
+        except Exception:
+            pass
+
+    # 2. Check 24h local cache
     key = _cache_key_all(state)
     cached = _read_cache(key)
     if cached is not None:
         return cached
 
+    # 3. Fetch from API (Slowest)
     resp = requests.get(
         BASE_URL,
         params={
@@ -115,11 +129,8 @@ def _parse_date(s: str) -> datetime:
     return datetime.strptime(s, "%d/%m/%Y")
 
 
-def _get_key() -> str:
-    k = os.environ.get("DATA_GOV_API_KEY")
-    if not k:
-        raise RuntimeError("DATA_GOV_API_KEY missing in env")
-    return k
+def _get_key() -> str | None:
+    return os.environ.get("DATA_GOV_API_KEY")
 
 
 def _cache_key(state: str, commodity: str, days: int) -> str:

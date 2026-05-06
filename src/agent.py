@@ -11,12 +11,6 @@ from datetime import datetime
 from functools import lru_cache
 from pathlib import Path
 
-try:
-    import ollama
-except ImportError:
-    ollama = None
-import google.generativeai as genai
-
 from .config import TRANSPORT_RATE_PER_KM, commodity_display_to_api
 from .tools import geo, mandi_geocoder, mandi_prices
 
@@ -364,6 +358,12 @@ _LANG_SUFFIX = {
 
 
 def _chat(system: str, user_obj, language: str = "en") -> str:
+    import google.generativeai as genai
+    try:
+        import ollama
+    except ImportError:
+        ollama = None
+
     if language in _LANG_SUFFIX:
         system = system + _LANG_SUFFIX[language]
     content = (
