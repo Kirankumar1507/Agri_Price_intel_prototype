@@ -1,4 +1,1182 @@
 {
-  "Haryana": [],
-  "Karnataka": []
+  "Karnataka": [
+    {
+      "market": "Badami APMC",
+      "district": "Bagalkot"
+    },
+    {
+      "market": "Bagalakot APMC",
+      "district": "Bagalkot"
+    },
+    {
+      "market": "Hungund APMC",
+      "district": "Bagalkot"
+    },
+    {
+      "market": "Jamakhandi APMC",
+      "district": "Bagalkot"
+    },
+    {
+      "market": "Bangalore APMC",
+      "district": "Bangalore"
+    },
+    {
+      "market": "Binny Mill (F&V), Bangalore APMC",
+      "district": "Bangalore"
+    },
+    {
+      "market": "Channapatana APMC",
+      "district": "Bangalore"
+    },
+    {
+      "market": "Doddaballa Pur APMC",
+      "district": "Bangalore"
+    },
+    {
+      "market": "Hoskote APMC",
+      "district": "Bangalore"
+    },
+    {
+      "market": "Ramanagara APMC",
+      "district": "Bangalore"
+    },
+    {
+      "market": "Athani APMC",
+      "district": "Belgaum"
+    },
+    {
+      "market": "Bailahongal APMC",
+      "district": "Belgaum"
+    },
+    {
+      "market": "Belgaum APMC",
+      "district": "Belgaum"
+    },
+    {
+      "market": "Gokak APMC",
+      "district": "Belgaum"
+    },
+    {
+      "market": "Kudchi",
+      "district": "Belgaum"
+    },
+    {
+      "market": "Kudchi APMC",
+      "district": "Belgaum"
+    },
+    {
+      "market": "Nandagada APMC",
+      "district": "Belgaum"
+    },
+    {
+      "market": "Nippani APMC",
+      "district": "Belgaum"
+    },
+    {
+      "market": "Ramdurga APMC",
+      "district": "Belgaum"
+    },
+    {
+      "market": "Sankeshwar APMC",
+      "district": "Belgaum"
+    },
+    {
+      "market": "Soundati APMC",
+      "district": "Belgaum"
+    },
+    {
+      "market": "Bellary APMC",
+      "district": "Bellary"
+    },
+    {
+      "market": "H.B. Halli APMC",
+      "district": "Bellary"
+    },
+    {
+      "market": "Hospet APMC",
+      "district": "Bellary"
+    },
+    {
+      "market": "Kottur APMC",
+      "district": "Bellary"
+    },
+    {
+      "market": "Sirguppa APMC",
+      "district": "Bellary"
+    },
+    {
+      "market": "Aurad APMC",
+      "district": "Bidar"
+    },
+    {
+      "market": "Basava Kalayana APMC",
+      "district": "Bidar"
+    },
+    {
+      "market": "Bidar APMC",
+      "district": "Bidar"
+    },
+    {
+      "market": "Bijapur APMC",
+      "district": "Bijapur"
+    },
+    {
+      "market": "Sindagi(Indi) APMC",
+      "district": "Bijapur"
+    },
+    {
+      "market": "Talikot APMC",
+      "district": "Bijapur"
+    },
+    {
+      "market": "Chamaraj Nagar",
+      "district": "Chamrajnagar"
+    },
+    {
+      "market": "Chamaraj Nagar APMC",
+      "district": "Chamrajnagar"
+    },
+    {
+      "market": "Gundlupet APMC",
+      "district": "Chamrajnagar"
+    },
+    {
+      "market": "Kollegal APMC",
+      "district": "Chamrajnagar"
+    },
+    {
+      "market": "Chikkamagalore",
+      "district": "Chikmagalur"
+    },
+    {
+      "market": "Chikkamagalore APMC",
+      "district": "Chikmagalur"
+    },
+    {
+      "market": "Kadur APMC",
+      "district": "Chikmagalur"
+    },
+    {
+      "market": "Koppa APMC",
+      "district": "Chikmagalur"
+    },
+    {
+      "market": "Moodigere",
+      "district": "Chikmagalur"
+    },
+    {
+      "market": "Moodigere APMC",
+      "district": "Chikmagalur"
+    },
+    {
+      "market": "Tarikere APMC",
+      "district": "Chikmagalur"
+    },
+    {
+      "market": "Challakere APMC",
+      "district": "Chitradurga"
+    },
+    {
+      "market": "Chitradurga",
+      "district": "Chitradurga"
+    },
+    {
+      "market": "Chitradurga APMC",
+      "district": "Chitradurga"
+    },
+    {
+      "market": "Hiriyur APMC",
+      "district": "Chitradurga"
+    },
+    {
+      "market": "Holalkere",
+      "district": "Chitradurga"
+    },
+    {
+      "market": "Holalkere APMC",
+      "district": "Chitradurga"
+    },
+    {
+      "market": "Hosadurga APMC",
+      "district": "Chitradurga"
+    },
+    {
+      "market": "Channagiri APMC",
+      "district": "Davangere"
+    },
+    {
+      "market": "Davangere",
+      "district": "Davangere"
+    },
+    {
+      "market": "Davangere APMC",
+      "district": "Davangere"
+    },
+    {
+      "market": "Harappana Halli APMC",
+      "district": "Davangere"
+    },
+    {
+      "market": "Harihara APMC",
+      "district": "Davangere"
+    },
+    {
+      "market": "Honnali APMC",
+      "district": "Davangere"
+    },
+    {
+      "market": "Jagalur APMC",
+      "district": "Davangere"
+    },
+    {
+      "market": "Annigeri APMC",
+      "district": "Dharwad"
+    },
+    {
+      "market": "Dharwar APMC",
+      "district": "Dharwad"
+    },
+    {
+      "market": "Hubli (Amaragol) APMC",
+      "district": "Dharwad"
+    },
+    {
+      "market": "Kalagategi",
+      "district": "Dharwad"
+    },
+    {
+      "market": "Kalagategi APMC",
+      "district": "Dharwad"
+    },
+    {
+      "market": "Kundagol APMC",
+      "district": "Dharwad"
+    },
+    {
+      "market": "Gadag APMC",
+      "district": "Gadag"
+    },
+    {
+      "market": "Laxmeshwar APMC",
+      "district": "Gadag"
+    },
+    {
+      "market": "Mundaragi APMC",
+      "district": "Gadag"
+    },
+    {
+      "market": "Rona APMC",
+      "district": "Gadag"
+    },
+    {
+      "market": "Arakalgud APMC",
+      "district": "Hassan"
+    },
+    {
+      "market": "Arasikere APMC",
+      "district": "Hassan"
+    },
+    {
+      "market": "Belur APMC",
+      "district": "Hassan"
+    },
+    {
+      "market": "Channarayapatna",
+      "district": "Hassan"
+    },
+    {
+      "market": "Channarayapatna APMC",
+      "district": "Hassan"
+    },
+    {
+      "market": "Hassan APMC",
+      "district": "Hassan"
+    },
+    {
+      "market": "Holenarsipura APMC",
+      "district": "Hassan"
+    },
+    {
+      "market": "Sakaleshpura APMC",
+      "district": "Hassan"
+    },
+    {
+      "market": "Byadagi APMC",
+      "district": "Haveri"
+    },
+    {
+      "market": "Hanagal",
+      "district": "Haveri"
+    },
+    {
+      "market": "Hanagal APMC",
+      "district": "Haveri"
+    },
+    {
+      "market": "Haveri APMC",
+      "district": "Haveri"
+    },
+    {
+      "market": "Hirekerur APMC",
+      "district": "Haveri"
+    },
+    {
+      "market": "Ranebennur APMC",
+      "district": "Haveri"
+    },
+    {
+      "market": "Savanur APMC",
+      "district": "Haveri"
+    },
+    {
+      "market": "Shiggauv APMC",
+      "district": "Haveri"
+    },
+    {
+      "market": "Chincholi APMC",
+      "district": "Kalburgi"
+    },
+    {
+      "market": "Kalburgi  (Jevargi) APMC",
+      "district": "Kalburgi"
+    },
+    {
+      "market": "Kalburgi (Afzalpur) APMC",
+      "district": "Kalburgi"
+    },
+    {
+      "market": "Kalburgi APMC",
+      "district": "Kalburgi"
+    },
+    {
+      "market": "Sedam APMC",
+      "district": "Kalburgi"
+    },
+    {
+      "market": "Haliyala",
+      "district": "Karwar(Uttar Kannad)"
+    },
+    {
+      "market": "Haliyala APMC",
+      "district": "Karwar(Uttar Kannad)"
+    },
+    {
+      "market": "Honnavar APMC",
+      "district": "Karwar(Uttar Kannad)"
+    },
+    {
+      "market": "Karwar",
+      "district": "Karwar(Uttar Kannad)"
+    },
+    {
+      "market": "Karwar APMC",
+      "district": "Karwar(Uttar Kannad)"
+    },
+    {
+      "market": "Kumta",
+      "district": "Karwar(Uttar Kannad)"
+    },
+    {
+      "market": "Kumta APMC",
+      "district": "Karwar(Uttar Kannad)"
+    },
+    {
+      "market": "Mundgod",
+      "district": "Karwar(Uttar Kannad)"
+    },
+    {
+      "market": "Mundgod APMC",
+      "district": "Karwar(Uttar Kannad)"
+    },
+    {
+      "market": "Siddapur APMC",
+      "district": "Karwar(Uttar Kannad)"
+    },
+    {
+      "market": "Sirsi APMC",
+      "district": "Karwar(Uttar Kannad)"
+    },
+    {
+      "market": "Yellapur APMC",
+      "district": "Karwar(Uttar Kannad)"
+    },
+    {
+      "market": "Bangarpet",
+      "district": "Kolar"
+    },
+    {
+      "market": "Bangarpet APMC",
+      "district": "Kolar"
+    },
+    {
+      "market": "Bhagepalli APMC",
+      "district": "Kolar"
+    },
+    {
+      "market": "Chintamani APMC",
+      "district": "Kolar"
+    },
+    {
+      "market": "Gowribidanoor APMC",
+      "district": "Kolar"
+    },
+    {
+      "market": "Kolar APMC",
+      "district": "Kolar"
+    },
+    {
+      "market": "Malur APMC",
+      "district": "Kolar"
+    },
+    {
+      "market": "Mulabagilu APMC",
+      "district": "Kolar"
+    },
+    {
+      "market": "Srinivasapur APMC",
+      "district": "Kolar"
+    },
+    {
+      "market": "Gangavathi APMC",
+      "district": "Koppal"
+    },
+    {
+      "market": "Koppal APMC",
+      "district": "Koppal"
+    },
+    {
+      "market": "Kustagi APMC",
+      "district": "Koppal"
+    },
+    {
+      "market": "Yalburga APMC",
+      "district": "Koppal"
+    },
+    {
+      "market": "Gonikappal APMC",
+      "district": "Madikeri(Kodagu)"
+    },
+    {
+      "market": "Somvarpet APMC",
+      "district": "Madikeri(Kodagu)"
+    },
+    {
+      "market": "K.R. Pet",
+      "district": "Mandya"
+    },
+    {
+      "market": "K.R. Pet APMC",
+      "district": "Mandya"
+    },
+    {
+      "market": "Maddur APMC",
+      "district": "Mandya"
+    },
+    {
+      "market": "Malavalli",
+      "district": "Mandya"
+    },
+    {
+      "market": "Malavalli APMC",
+      "district": "Mandya"
+    },
+    {
+      "market": "Mandya APMC",
+      "district": "Mandya"
+    },
+    {
+      "market": "Nagamangala APMC",
+      "district": "Mandya"
+    },
+    {
+      "market": "Pandavapura",
+      "district": "Mandya"
+    },
+    {
+      "market": "Pandavapura APMC",
+      "district": "Mandya"
+    },
+    {
+      "market": "Srirangapattana",
+      "district": "Mandya"
+    },
+    {
+      "market": "Srirangapattana APMC",
+      "district": "Mandya"
+    },
+    {
+      "market": "Bantwala APMC",
+      "district": "Mangalore(Dakshin Kannad)"
+    },
+    {
+      "market": "Belthangdi APMC",
+      "district": "Mangalore(Dakshin Kannad)"
+    },
+    {
+      "market": "Mangalore APMC",
+      "district": "Mangalore(Dakshin Kannad)"
+    },
+    {
+      "market": "Puttur APMC",
+      "district": "Mangalore(Dakshin Kannad)"
+    },
+    {
+      "market": "Sulya APMC",
+      "district": "Mangalore(Dakshin Kannad)"
+    },
+    {
+      "market": "Hunsur",
+      "district": "Mysore"
+    },
+    {
+      "market": "Hunsur APMC",
+      "district": "Mysore"
+    },
+    {
+      "market": "K.R.Nagar",
+      "district": "Mysore"
+    },
+    {
+      "market": "K.R.Nagar APMC",
+      "district": "Mysore"
+    },
+    {
+      "market": "Mysore (Bandipalya) APMC",
+      "district": "Mysore"
+    },
+    {
+      "market": "Nanjangud APMC",
+      "district": "Mysore"
+    },
+    {
+      "market": "Piriya Pattana",
+      "district": "Mysore"
+    },
+    {
+      "market": "Piriya Pattana APMC",
+      "district": "Mysore"
+    },
+    {
+      "market": "T. Narasipura APMC",
+      "district": "Mysore"
+    },
+    {
+      "market": "Lingasugur APMC",
+      "district": "Raichur"
+    },
+    {
+      "market": "Manvi APMC",
+      "district": "Raichur"
+    },
+    {
+      "market": "Raichur",
+      "district": "Raichur"
+    },
+    {
+      "market": "Raichur APMC",
+      "district": "Raichur"
+    },
+    {
+      "market": "Sindhanur APMC",
+      "district": "Raichur"
+    },
+    {
+      "market": "Bhadravathi",
+      "district": "Shimoga"
+    },
+    {
+      "market": "Bhadravathi APMC",
+      "district": "Shimoga"
+    },
+    {
+      "market": "Sagar APMC",
+      "district": "Shimoga"
+    },
+    {
+      "market": "Sagar(Hosanagara) APMC",
+      "district": "Shimoga"
+    },
+    {
+      "market": "Shikaripura APMC",
+      "district": "Shimoga"
+    },
+    {
+      "market": "Shimoga",
+      "district": "Shimoga"
+    },
+    {
+      "market": "Shimoga APMC",
+      "district": "Shimoga"
+    },
+    {
+      "market": "Shimoga(Theertahalli) APMC",
+      "district": "Shimoga"
+    },
+    {
+      "market": "Sorabha",
+      "district": "Shimoga"
+    },
+    {
+      "market": "Sorabha APMC",
+      "district": "Shimoga"
+    },
+    {
+      "market": "Gubbi APMC",
+      "district": "Tumkur"
+    },
+    {
+      "market": "Huliyar APMC",
+      "district": "Tumkur"
+    },
+    {
+      "market": "Kunigal APMC",
+      "district": "Tumkur"
+    },
+    {
+      "market": "Madhugiri APMC",
+      "district": "Tumkur"
+    },
+    {
+      "market": "Sira",
+      "district": "Tumkur"
+    },
+    {
+      "market": "Sira APMC",
+      "district": "Tumkur"
+    },
+    {
+      "market": "Tiptur APMC",
+      "district": "Tumkur"
+    },
+    {
+      "market": "Tumkur APMC",
+      "district": "Tumkur"
+    },
+    {
+      "market": "Turvekere APMC",
+      "district": "Tumkur"
+    },
+    {
+      "market": "Karkala APMC",
+      "district": "Udupi"
+    },
+    {
+      "market": "Kundapura APMC",
+      "district": "Udupi"
+    },
+    {
+      "market": "Udupi",
+      "district": "Udupi"
+    },
+    {
+      "market": "Udupi APMC",
+      "district": "Udupi"
+    },
+    {
+      "market": "Yadgir APMC",
+      "district": "Yadgiri"
+    }
+  ],
+  "Haryana": [
+    {
+      "market": "Ambala Cantt. APMC",
+      "district": "Ambala"
+    },
+    {
+      "market": "Ambala City APMC",
+      "district": "Ambala"
+    },
+    {
+      "market": "Ambala City(Subji Mandi) APMC",
+      "district": "Ambala"
+    },
+    {
+      "market": "Barara APMC",
+      "district": "Ambala"
+    },
+    {
+      "market": "Mullana APMC",
+      "district": "Ambala"
+    },
+    {
+      "market": "Mullana(saha) APMC",
+      "district": "Ambala"
+    },
+    {
+      "market": "Naneola APMC",
+      "district": "Ambala"
+    },
+    {
+      "market": "Naraingarh APMC",
+      "district": "Ambala"
+    },
+    {
+      "market": "Shahzadpur APMC",
+      "district": "Ambala"
+    },
+    {
+      "market": "Behal APMC",
+      "district": "Bhiwani"
+    },
+    {
+      "market": "Bhiwani APMC",
+      "district": "Bhiwani"
+    },
+    {
+      "market": "Ch. Dadri APMC",
+      "district": "Bhiwani"
+    },
+    {
+      "market": "Loharu APMC",
+      "district": "Bhiwani"
+    },
+    {
+      "market": "Siwani APMC",
+      "district": "Bhiwani"
+    },
+    {
+      "market": "Tosham APMC",
+      "district": "Bhiwani"
+    },
+    {
+      "market": "Ballabhgarh APMC",
+      "district": "Faridabad"
+    },
+    {
+      "market": "Faridabad APMC",
+      "district": "Faridabad"
+    },
+    {
+      "market": "New Grain Market , Faridabad APMC",
+      "district": "Faridabad"
+    },
+    {
+      "market": "Bhattu Kalan APMC",
+      "district": "Fatehabad"
+    },
+    {
+      "market": "Bhuna APMC",
+      "district": "Fatehabad"
+    },
+    {
+      "market": "Dharsul APMC",
+      "district": "Fatehabad"
+    },
+    {
+      "market": "Fatehabad APMC",
+      "district": "Fatehabad"
+    },
+    {
+      "market": "Jakhal APMC",
+      "district": "Fatehabad"
+    },
+    {
+      "market": "Ratia APMC",
+      "district": "Fatehabad"
+    },
+    {
+      "market": "Tohana APMC",
+      "district": "Fatehabad"
+    },
+    {
+      "market": "Tohana(New Veg Market) APMC",
+      "district": "Fatehabad"
+    },
+    {
+      "market": "Farukh Nagar APMC",
+      "district": "Gurgaon"
+    },
+    {
+      "market": "Gurgaon APMC",
+      "district": "Gurgaon"
+    },
+    {
+      "market": "Pataudi APMC",
+      "district": "Gurgaon"
+    },
+    {
+      "market": "Sohna APMC",
+      "district": "Gurgaon"
+    },
+    {
+      "market": "Adampur APMC",
+      "district": "Hissar"
+    },
+    {
+      "market": "Adampur(Agroha) APMC",
+      "district": "Hissar"
+    },
+    {
+      "market": "Barwala(Hisar) APMC",
+      "district": "Hissar"
+    },
+    {
+      "market": "Bass APMC",
+      "district": "Hissar"
+    },
+    {
+      "market": "Hansi APMC",
+      "district": "Hissar"
+    },
+    {
+      "market": "Hansi(Sisai) APMC",
+      "district": "Hissar"
+    },
+    {
+      "market": "Hissar APMC",
+      "district": "Hissar"
+    },
+    {
+      "market": "Narnaund APMC",
+      "district": "Hissar"
+    },
+    {
+      "market": "Uklana APMC",
+      "district": "Hissar"
+    },
+    {
+      "market": "Bahadurgarh APMC",
+      "district": "Jhajar"
+    },
+    {
+      "market": "Beri APMC",
+      "district": "Jhajar"
+    },
+    {
+      "market": "Jhajjar APMC",
+      "district": "Jhajar"
+    },
+    {
+      "market": "Jind APMC",
+      "district": "Jind"
+    },
+    {
+      "market": "Jullana APMC",
+      "district": "Jind"
+    },
+    {
+      "market": "Narwana APMC",
+      "district": "Jind"
+    },
+    {
+      "market": "New Grain Market , Jind APMC",
+      "district": "Jind"
+    },
+    {
+      "market": "Pillukhera APMC",
+      "district": "Jind"
+    },
+    {
+      "market": "Safidon APMC",
+      "district": "Jind"
+    },
+    {
+      "market": "Uchana APMC",
+      "district": "Jind"
+    },
+    {
+      "market": "Cheeka APMC",
+      "district": "Kaithal"
+    },
+    {
+      "market": "Dhand APMC",
+      "district": "Kaithal"
+    },
+    {
+      "market": "Kaithal APMC",
+      "district": "Kaithal"
+    },
+    {
+      "market": "Kalayat APMC",
+      "district": "Kaithal"
+    },
+    {
+      "market": "Pai APMC",
+      "district": "Kaithal"
+    },
+    {
+      "market": "Pai(Rajaund) APMC",
+      "district": "Kaithal"
+    },
+    {
+      "market": "Pundri APMC",
+      "district": "Kaithal"
+    },
+    {
+      "market": "Siwan APMC",
+      "district": "Kaithal"
+    },
+    {
+      "market": "Asandh APMC",
+      "district": "Karnal"
+    },
+    {
+      "market": "Gharaunda APMC",
+      "district": "Karnal"
+    },
+    {
+      "market": "Indri APMC",
+      "district": "Karnal"
+    },
+    {
+      "market": "Jundla APMC",
+      "district": "Karnal"
+    },
+    {
+      "market": "Kunjpura APMC",
+      "district": "Karnal"
+    },
+    {
+      "market": "New Grain Market(main), Karnal APMC",
+      "district": "Karnal"
+    },
+    {
+      "market": "Nigdu APMC",
+      "district": "Karnal"
+    },
+    {
+      "market": "Tarori APMC",
+      "district": "Karnal"
+    },
+    {
+      "market": "Babain APMC",
+      "district": "Kurukshetra"
+    },
+    {
+      "market": "Iamailabad APMC",
+      "district": "Kurukshetra"
+    },
+    {
+      "market": "Ladwa APMC",
+      "district": "Kurukshetra"
+    },
+    {
+      "market": "Pehowa APMC",
+      "district": "Kurukshetra"
+    },
+    {
+      "market": "Pehowa(Gumthala Gahru) APMC",
+      "district": "Kurukshetra"
+    },
+    {
+      "market": "Pipli APMC",
+      "district": "Kurukshetra"
+    },
+    {
+      "market": "Shahabad APMC",
+      "district": "Kurukshetra"
+    },
+    {
+      "market": "Thanesar APMC",
+      "district": "Kurukshetra"
+    },
+    {
+      "market": "Ateli APMC",
+      "district": "Mahendragarh-Narnaul"
+    },
+    {
+      "market": "Khanina APMC",
+      "district": "Mahendragarh-Narnaul"
+    },
+    {
+      "market": "Mohindergarh APMC",
+      "district": "Mahendragarh-Narnaul"
+    },
+    {
+      "market": "Narnaul APMC",
+      "district": "Mahendragarh-Narnaul"
+    },
+    {
+      "market": "FerozpurZirkha(Nagina) APMC",
+      "district": "Mewat"
+    },
+    {
+      "market": "Hathin APMC",
+      "district": "Mewat"
+    },
+    {
+      "market": "Nuh APMC",
+      "district": "Mewat"
+    },
+    {
+      "market": "Punhana APMC",
+      "district": "Mewat"
+    },
+    {
+      "market": "Tauru APMC",
+      "district": "Mewat"
+    },
+    {
+      "market": "Hassanpur APMC",
+      "district": "Palwal"
+    },
+    {
+      "market": "Hodal APMC",
+      "district": "Palwal"
+    },
+    {
+      "market": "Palwal APMC",
+      "district": "Palwal"
+    },
+    {
+      "market": "Barwala APMC",
+      "district": "Panchkula"
+    },
+    {
+      "market": "New Grain Market , Panchkula APMC",
+      "district": "Panchkula"
+    },
+    {
+      "market": "Panchkul(Kalka) APMC",
+      "district": "Panchkula"
+    },
+    {
+      "market": "Raipur Rai APMC",
+      "district": "Panchkula"
+    },
+    {
+      "market": "Bapauli APMC",
+      "district": "Panipat"
+    },
+    {
+      "market": "Israna APMC",
+      "district": "Panipat"
+    },
+    {
+      "market": "Madlauda APMC",
+      "district": "Panipat"
+    },
+    {
+      "market": "Panipat APMC",
+      "district": "Panipat"
+    },
+    {
+      "market": "Panipat(Baharpur) APMC",
+      "district": "Panipat"
+    },
+    {
+      "market": "Samalkha APMC",
+      "district": "Panipat"
+    },
+    {
+      "market": "Kosli APMC",
+      "district": "Rewari"
+    },
+    {
+      "market": "Rewari APMC",
+      "district": "Rewari"
+    },
+    {
+      "market": "Meham APMC",
+      "district": "Rohtak"
+    },
+    {
+      "market": "Rohtak APMC",
+      "district": "Rohtak"
+    },
+    {
+      "market": "Rohtak(Kalanaur) APMC",
+      "district": "Rohtak"
+    },
+    {
+      "market": "Sampla APMC",
+      "district": "Rohtak"
+    },
+    {
+      "market": "Dabwali APMC",
+      "district": "Sirsa"
+    },
+    {
+      "market": "Dabwali(Chautala) APMC",
+      "district": "Sirsa"
+    },
+    {
+      "market": "Ding APMC",
+      "district": "Sirsa"
+    },
+    {
+      "market": "Ellanabad APMC",
+      "district": "Sirsa"
+    },
+    {
+      "market": "Kalawali(Odhan) APMC",
+      "district": "Sirsa"
+    },
+    {
+      "market": "New Grain Market , Sirsa APMC",
+      "district": "Sirsa"
+    },
+    {
+      "market": "Rania APMC",
+      "district": "Sirsa"
+    },
+    {
+      "market": "Rania(Jiwan nagar) APMC",
+      "district": "Sirsa"
+    },
+    {
+      "market": "Sirsa APMC",
+      "district": "Sirsa"
+    },
+    {
+      "market": "Sirsa(Malekan) APMC",
+      "district": "Sirsa"
+    },
+    {
+      "market": "kalanwali APMC",
+      "district": "Sirsa"
+    },
+    {
+      "market": "Ganaur APMC",
+      "district": "Sonipat"
+    },
+    {
+      "market": "Gohana APMC",
+      "district": "Sonipat"
+    },
+    {
+      "market": "New Grain Market , Sonipat APMC",
+      "district": "Sonipat"
+    },
+    {
+      "market": "Sonepat APMC",
+      "district": "Sonipat"
+    },
+    {
+      "market": "Sonepat(Kharkhoda) APMC",
+      "district": "Sonipat"
+    },
+    {
+      "market": "Bilaspur APMC",
+      "district": "Yamuna Nagar"
+    },
+    {
+      "market": "Chhachhrauli(Khizrabad) APMC",
+      "district": "Yamuna Nagar"
+    },
+    {
+      "market": "Chhachrauli APMC",
+      "district": "Yamuna Nagar"
+    },
+    {
+      "market": "Jagadhri APMC",
+      "district": "Yamuna Nagar"
+    },
+    {
+      "market": "Mustafabad APMC",
+      "district": "Yamuna Nagar"
+    },
+    {
+      "market": "Radaur APMC",
+      "district": "Yamuna Nagar"
+    },
+    {
+      "market": "Sadhaura APMC",
+      "district": "Yamuna Nagar"
+    },
+    {
+      "market": "Yamuna Nagar APMC",
+      "district": "Yamuna Nagar"
+    }
+  ]
 }

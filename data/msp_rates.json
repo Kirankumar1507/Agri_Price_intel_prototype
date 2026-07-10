@@ -2,6 +2,7 @@
   "_meta": {
     "source": "CACP/CCEA notifications — MSP for Marketing Season 2025-26. Kharif crops announced June 2025, Rabi crops announced October 2025. Values in ₹ per quintal for FAQ (Fair Average Quality).",
     "last_updated": "2026-04-30",
+    "pending_update": "Kharif 2026-27 MSP (announced ~June 2026) not yet entered. Rates below are 2025-26 and are labelled with their season in the UI, which also shows a 'verify current rate locally' caption. Replace Kharif values + season strings when the authoritative CACP/PIB 2026-27 numbers are confirmed.",
     "note": "MSP for Sugarcane is technically FRP (Fair & Remunerative Price) set by Cabinet, not CACP MSP. Included here for convenience. Horticulture crops (Tomato, Onion, Potato) have no MSP — they are covered under Operation Greens price stabilisation."
   },
   "rates": {

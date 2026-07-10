@@ -23,6 +23,7 @@ from src.agent import (
 from datetime import datetime
 from pathlib import Path
 
+from src import instrumentation
 from src.config import STATES, commodity_display_to_apy, crop_displays
 from src.i18n import LANGUAGES, STATE_DEFAULT_LANG, t
 from src.tools import apy as apy_tool
@@ -32,6 +33,16 @@ from src.tools import msp as msp_tool
 from src.tools import weather as weather_tool
 
 load_dotenv()
+
+# On Streamlit Community Cloud secrets are injected via st.secrets, not the process
+# environment. Bridge them into os.environ (without overriding a real env var / .env)
+# so the env-based tools and config keep working unchanged. No-op when there's no
+# secrets.toml (local dev falls back to .env).
+try:
+    for _k, _v in st.secrets.items():
+        os.environ.setdefault(_k, str(_v))
+except Exception:
+    pass
 
 st.set_page_config(page_title="Agri Price Intel", layout="wide")
 st.title("Agri Price Intel")
@@ -67,6 +78,23 @@ def _mandi_pin(color: str, size: int) -> folium.DivIcon:
 
 def _most_active(tdf: pd.DataFrame, n: int) -> list[str]:
     return tdf.groupby("market").size().sort_values(ascending=False).head(n).index.tolist()
+
+
+def _jitter(lat: float, lng: float, key: str, spread: float = 0.02):
+    """Nudge a marker by a small, DETERMINISTIC offset (±~spread degrees).
+
+    Mandi coordinates are district centroids, so every mandi in a district
+    shares one point and the pins stack. A stable hash-derived offset spreads
+    them apart visually (~2 km at spread=0.02) without moving distance maths,
+    which uses the real coordinates elsewhere. hashlib (not hash()) so the
+    layout is identical across runs/processes.
+    """
+    import hashlib
+    h = hashlib.md5(key.encode("utf-8")).digest()
+    # Two independent bytes → offsets in [-spread, +spread].
+    off_lat = (h[0] / 255.0 * 2 - 1) * spread
+    off_lng = (h[1] / 255.0 * 2 - 1) * spread
+    return lat + off_lat, lng + off_lng
 
 
 _BADGE_LLM = (
@@ -227,11 +255,12 @@ with st.sidebar:
     if search_btn and address_query.strip():
         with st.spinner(t("sidebar.searching", lang)):
             try:
-                candidates = geocoder.search(f"{address_query.strip()}, {state}")
+                with instrumentation.trace_call("geocoder.search"):
+                    candidates = geocoder.search(f"{address_query.strip()}, {state}")
                 st.session_state["candidates"] = candidates
                 st.session_state["selected_idx"] = 0 if candidates else None
-            except Exception as e:
-                st.error(f"Geocoder failed: {e}")
+            except Exception:
+                st.error(t("sidebar.geocoder_failed", lang))
                 st.session_state["candidates"] = []
 
     candidates = st.session_state.get("candidates", [])
@@ -253,9 +282,9 @@ with st.sidebar:
     has_ai_key = os.environ.get("GEMINI_API_KEY")
     
     if not has_data_key:
-        st.warning("⚠️ DATA_GOV_API_KEY missing. App will only show demo data.")
+        st.warning(t("sidebar.warn_no_data_key", lang))
     if not has_ai_key:
-        st.info("ℹ️ GEMINI_API_KEY missing. Narratives will be unavailable.")
+        st.info(t("sidebar.warn_no_ai_key", lang))
 
     go = st.button(
         t("sidebar.get_intel", lang),
@@ -267,13 +296,14 @@ with st.sidebar:
 # --- Compute (once per Go click or demo trigger) ---
 run_demo = st.session_state.pop("_run_demo", False)
 if (go or run_demo) and selected:
-    with st.spinner("Fetching live mandi prices & analyzing market trends..."):
-        st.session_state["result"] = analyze_market(
-            state, crop,
-            user_lat=selected["lat"],
-            user_lng=selected["lng"],
-            language=lang,
-        )
+    with st.spinner(t("compute.spinner", lang)):
+        with instrumentation.trace_call("analyze_market", {"state": state, "crop": crop}):
+            st.session_state["result"] = analyze_market(
+                state, crop,
+                user_lat=selected["lat"],
+                user_lng=selected["lng"],
+                language=lang,
+            )
         st.session_state["result_for"] = {
             "state": state, "crop": crop,
             "lat": selected["lat"], "lng": selected["lng"],
@@ -299,50 +329,9 @@ def _fmt_rupees(v: float) -> str:
     return f"₹{v:,.0f}"
 
 
-    if result and not stale_result:
-        # Decision Verdict Card (T1.2) + TTS (T3.1)
-        dec = result.get("decision", {})
-        v_colors = {
-            "sell_now": ("#0b5d0b", "#f3fcf3"),
-            "store": ("#2196f3", "#f0f7ff"),
-            "travel": ("#ff9800", "#fff9f0"),
-            "wait": ("#757575", "#f5f5f5")
-        }
-        accent, bg = v_colors.get(dec.get("verdict"), ("#757575", "#f5f5f5"))
-        
-        st.markdown(
-            f'<div style="background:{bg}; border-left: 5px solid {accent}; '
-            f'padding: 20px; border-radius: 4px; margin-bottom: 24px;">'
-            f'<div style="color:{accent}; font-weight:700; font-size:0.8rem; '
-            f'text-transform:uppercase; letter-spacing:0.05rem; margin-bottom:4px;">'
-            f'{t("verdict.headline", lang)}</div>'
-            f'<div style="font-size:1.6rem; font-weight:700; color:#1a1a1a; line-height:1.2;">'
-            f'{dec.get("headline", "")}</div>'
-            f'<div style="margin-top:12px; color:#555; font-size:0.95rem;">'
-            f'{" ".join(dec.get("reasoning", []))}</div>'
-            f'</div>',
-            unsafe_allow_html=True
-        )
-        
-        # TTS Button (T3.1)
-        if st.button(t("verdict.hear", lang)):
-            from src.tools import tts
-            audio = tts.get_audio_bytes(dec.get("headline", ""), lang)
-            st.audio(audio, format="audio/mp3")
-
-        st.markdown(f"### {t('answer.market_view', lang)}")
-    st.markdown(
-        "Pick a state, crop, and village in the sidebar → get the **best APMC mandi** "
-        "(highest net ₹/qtl after ₹5/km transport), the nearest 5 options, and the "
-        "government schemes that apply — rewritten in plain English."
-    )
 if not result:
     st.markdown(f"#### {t('hero.what', lang)}")
-    st.markdown(
-        "Pick a state, crop, and village in the sidebar → get the **best APMC mandi** "
-        "(highest net ₹/qtl after ₹5/km transport), the nearest 5 options, and the "
-        "government schemes that apply — rewritten in plain English."
-    )
+    st.markdown(t("hero.pitch", lang))
     c_demo, c_info = st.columns([1, 3])
     with c_demo:
         if st.button(
@@ -353,15 +342,19 @@ if not result:
             st.session_state["_apply_demo"] = True
             st.rerun()
     with c_info:
-        st.caption(
-            "Or use the sidebar to pick your own state, crop, and location. "
-            "Data source: data.gov.in Agmarknet (variety-wise daily prices)."
-        )
+        st.caption(t("hero.demo_caption", lang))
 elif not stale_result and not result["no_data"]:
     verdict_obj = result.get("verdict") or {}
     verdict_headline = result.get("verdict_headline")
     if verdict_obj.get("verdict") and verdict_obj["verdict"] != "no_data":
         _render_verdict_callout(verdict_obj, verdict_headline, lang)
+        # TTS (T3.1): speak the headline actually shown (LLM headline or factual fallback).
+        if st.button(t("verdict.hear", lang)):
+            from src.tools import tts
+            spoken = verdict_headline or _fallback_headline(verdict_obj)
+            audio = tts.get_audio_bytes(spoken, lang)
+            if audio:
+                st.audio(audio, format="audio/mp3")
 
     best = next(
         (r for r in result["all_mandis"] if r["category"] == "best"), None
@@ -426,6 +419,7 @@ elif not stale_result and not result["no_data"]:
                 f'</div>',
                 unsafe_allow_html=True,
             )
+            st.caption(t("answer.msp_verify", lang))
 
 # --- Main columns ---
 col_map, col_out = st.columns([1, 1])
@@ -477,8 +471,10 @@ with col_map:
             parts = [f"No {crop} data", dist_label]
             popup = f"<b>{r['market']}</b> ({r['district']})<br>{' · '.join(parts)}"
             tooltip = f"{r['market']} — no {crop} data"
+        # District-centroid coords stack pins; spread them with a stable jitter.
+        jlat, jlng = _jitter(r["lat"], r["lng"], f"{r['market']}|{r['district']}")
         folium.Marker(
-            [r["lat"], r["lng"]],
+            [jlat, jlng],
             popup=popup,
             tooltip=tooltip,
             icon=_mandi_pin(color, size),
@@ -606,6 +602,7 @@ with col_out:
                         st.caption("Pick at least one mandi.")
 
     with tabs[1]:
+        st.caption(t("tab.production_en_only", lang))
         apy_crop = commodity_display_to_apy(state, crop)
         if not apy_crop:
             st.info(
@@ -727,18 +724,16 @@ with col_out:
         else:
             chips.append(_phase_chip(t("weather.iod", lang), unavail, "#9e9e9e"))
 
-        sources = []
-        if climate.get("enso"): sources += climate["enso"].get("sources", [])
-        if climate.get("iod"):  sources += climate["iod"].get("sources", [])
-        src_line = " · ".join(sorted(set(sources))) if sources else "—"
-
         st.markdown(
-            f"##### {t('weather.climate_signal', lang)} {_BADGE_LLM if False else ''}",
+            f"##### {t('weather.climate_signal', lang)}",
             unsafe_allow_html=True,
         )
+        # NOTE: ENSO/IOD values are a fixed illustrative snapshot (see climate.py),
+        # not a live NOAA/BoM feed — so we label them as such rather than citing a
+        # source we don't actually pull from.
         st.markdown(
             f'<div style="margin-bottom:8px;">{"".join(chips)}</div>'
-            f'<div style="font-size:0.75rem;color:#666;">Source: {src_line}</div>',
+            f'<div style="font-size:0.75rem;color:#999;">⚠️ {t("weather.climate_illustrative", lang)}</div>',
             unsafe_allow_html=True,
         )
         st.divider()
@@ -809,15 +804,17 @@ with col_out:
                 st.caption(f"Season: {cal_entry['season']}")
 
     with tabs[3]:
-        # News & Advisories (T2.2)
+        # News & Advisories (T2.2) — currently sample items, not a live feed.
+        st.caption(f"⚠️ {t('news.sample_notice', lang)}")
         from src.tools import news
         news_items = news.fetch_agri_news(state, lang)
         for item in news_items:
+            # No "Read more" link: these are illustrative samples, so we don't
+            # render URLs that imply a real, resolvable source article.
             st.markdown(
                 f"**{item['title']}**\n\n"
                 f"_{item['source']} · {item['date']}_\n\n"
                 f"{item['summary']}\n\n"
-                f"[Read more]({item['link']})\n\n"
                 "---"
             )
 

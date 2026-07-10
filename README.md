@@ -7,6 +7,11 @@
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat)
 ![Cost](https://img.shields.io/badge/Cost-₹0/month-0b5d0b?style=flat)
 
+> **🔗 Live demo:** _<add your Streamlit Community Cloud URL here after deploying>_
+> · ⚠️ Early prototype / work in progress — Karnataka & Haryana only; some panels (climate, news) show illustrative sample data.
+
+**Deploy your own:** push to GitHub → [share.streamlit.io](https://share.streamlit.io) → New app (`app.py`, Python 3.11) → add secrets from [`.streamlit/secrets.toml.example`](.streamlit/secrets.toml.example) → Deploy.
+
 ---
 
 ## The Problem

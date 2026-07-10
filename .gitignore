@@ -12,6 +12,7 @@ build/
 
 # Environment
 .env
+.streamlit/secrets.toml
 
 # OS
 .DS_Store
@@ -35,6 +36,7 @@ data/*.csv
 !data/crop_calendar.json
 !data/msp_rates.json
 !data/mandi_coords.json
+!data/mandi_lists.json
 
 # Claude/Gemini config
 .claude/

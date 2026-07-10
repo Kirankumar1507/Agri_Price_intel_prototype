@@ -12,67 +12,21 @@ from datetime import datetime
 from functools import lru_cache
 from pathlib import Path
 
-from .config import TRANSPORT_RATE_PER_KM, commodity_display_to_api
+from .config import (
+    ARBITRAGE_MENTION_GAP,
+    ARBITRAGE_MIN_GAP,
+    STALE_DAYS,
+    TRANSPORT_RATE_PER_KM,
+    TREND_HIGH_CONF_PCT,
+    TREND_LOOKBACK_DAYS,
+    TREND_SELL_PCT,
+    TREND_STORE_PCT,
+    commodity_display_to_api,
+)
 from .tools import geo, mandi_geocoder, mandi_prices
 
 MODEL = os.environ.get("OLLAMA_MODEL", "gemma4:e4b")
 PROMPTS_DIR = Path(__file__).parent / "prompts"
-
-
-def decide_action(
-    mandi_table: list[dict], 
-    crop: str, 
-    state: str,
-    language: str = "en"
-) -> dict:
-    """Return a deterministic verdict + LLM-refined headline."""
-    if not mandi_table:
-        return {
-            "verdict": "wait",
-            "confidence": "low",
-            "reasoning": ["No recent price data available for your location."],
-            "headline": "Insufficient data to make a recommendation."
-        }
-
-    best = mandi_table[0]
-    nearest = min(mandi_table, key=lambda x: x["dist_km"])
-    
-    # 1. Deterministic Rules
-    reasoning = []
-    verdict = "wait"
-    
-    # Price Trend logic (simulated for now, would use 'trend' from analyze_market)
-    # If best mandi is significantly better than nearest after transport
-    arbitrage = best["net_price_qtl"] - nearest["net_price_qtl"]
-    if arbitrage > 150:
-        verdict = "travel"
-        reasoning.append(f"Traveling to {best['market']} earns ₹{arbitrage:.0f}/qtl more after transport.")
-    elif best["price_qtl"] > 2500: # Placeholder for "good price"
-        verdict = "sell_now"
-        reasoning.append("Current market price is strong relative to seasonal averages.")
-    else:
-        verdict = "store"
-        reasoning.append("Prices are currently low. If you have storage, consider waiting.")
-
-    # 2. LLM Headline rewrite
-    prompt = f"""
-    Based on the following data, write a ONE-LINE actionable recommendation for a farmer.
-    Target Language: {language}
-    
-    Data:
-    - Crop: {crop}
-    - Recommended Action: {verdict}
-    - Key Reason: {reasoning[0]}
-    - Best Market: {best['market']} at ₹{best['price_qtl']}
-    """
-    headline = _chat("decision", {"prompt": prompt}, language=language)
-    
-    return {
-        "verdict": verdict,
-        "confidence": "medium",
-        "reasoning": reasoning,
-        "headline": headline or reasoning[0]
-    }
 
 
 def analyze_market(
@@ -106,13 +60,15 @@ def analyze_market(
             language=language,
         )
 
+    # --- Decision Agent (Tier 1.2): deterministic verdict + LLM headline ---
     verdict = decide_action(
         mandi_table, all_mandis, trend,
         user_has_location=user_lat is not None,
     )
-
-    # --- Decision Agent integration (Tier 1.2) ---
-    decision = decide_action(mandi_table, crop_display, state, language)
+    verdict_headline = _headline_for_verdict(verdict, state, crop_display, language)
+    if not verdict_headline or _is_placeholder(verdict_headline):
+        # No LLM available — let the UI render the factual fallback headline.
+        verdict_headline = None
 
     return {
         "narrative": narrative,
@@ -121,7 +77,8 @@ def analyze_market(
         "trend": trend,
         "latest_date": latest_date,
         "no_data": not records,
-        "decision": decision,
+        "verdict": verdict,
+        "verdict_headline": verdict_headline,
     }
 
 
@@ -168,9 +125,11 @@ def decide_action(
         best.get("days_old") if best
         else (mandi_table[0].get("days_old") if mandi_table else None)
     )
-    is_stale = days_old is not None and days_old > 14
+    is_stale = days_old is not None and days_old > STALE_DAYS
 
-    trend_pct = _trend_change_pct(trend, market=(best["market"] if best else None), days=7)
+    trend_pct = _trend_change_pct(
+        trend, market=(best["market"] if best else None), days=TREND_LOOKBACK_DAYS
+    )
 
     arb_gap = None
     if best and nearest and best["market"] != nearest["market"]:
@@ -189,7 +148,7 @@ def decide_action(
         reasons.append(f"Latest reported price is {days_old} days old.")
     if trend_pct is not None:
         reasons.append(f"Best mandi price moved {trend_pct:+.1f}% week-on-week.")
-    if arb_gap is not None and arb_gap > 5 and best and nearest:
+    if arb_gap is not None and arb_gap > ARBITRAGE_MENTION_GAP and best and nearest:
         reasons.append(
             f"{best['market']} pays ₹{arb_gap:.0f}/qtl more after transport "
             f"than {nearest['market']}."
@@ -197,11 +156,11 @@ def decide_action(
 
     if is_stale:
         verdict, conf = "verify", "low"
-    elif trend_pct is not None and trend_pct <= -5:
-        verdict, conf = "sell_now", ("high" if trend_pct <= -10 else "med")
-    elif trend_pct is not None and trend_pct >= 5:
-        verdict, conf = "store", ("high" if trend_pct >= 10 else "med")
-    elif arb_gap is not None and arb_gap > 150:
+    elif trend_pct is not None and trend_pct <= TREND_SELL_PCT:
+        verdict, conf = "sell_now", ("high" if trend_pct <= -TREND_HIGH_CONF_PCT else "med")
+    elif trend_pct is not None and trend_pct >= TREND_STORE_PCT:
+        verdict, conf = "store", ("high" if trend_pct >= TREND_HIGH_CONF_PCT else "med")
+    elif arb_gap is not None and arb_gap > ARBITRAGE_MIN_GAP:
         verdict, conf = "travel", "med"
     else:
         verdict, conf = "wait", "low"
@@ -437,13 +396,13 @@ def _chat(system: str, user_obj, language: str = "en") -> str:
         except Exception as e:
             # Fallback will kick in if primary LLM fails
             print(f"Gemini Error ({model_name}): {str(e)}", file=sys.stderr)
-            return _LLM_PLACEHOLDER
+            return _placeholder(language)
 
     # Fallback: local Ollama for development. Skipped silently in cloud.
     try:
         import ollama
     except ImportError:
-        return _LLM_PLACEHOLDER
+        return _placeholder(language)
     try:
         resp = ollama.chat(
             model=MODEL,
@@ -456,11 +415,28 @@ def _chat(system: str, user_obj, language: str = "en") -> str:
         return resp["message"]["content"]
     except Exception as e:
         print(f"[agent._chat] Ollama call failed: {e}", file=sys.stderr)
-        return _LLM_PLACEHOLDER
+        return _placeholder(language)
 
 
-_LLM_PLACEHOLDER = (
-    "_LLM narrative unavailable for this section. "
-    "Set `GEMINI_API_KEY` in Streamlit Cloud Secrets, "
-    "or run `ollama serve` locally._"
-)
+_LLM_PLACEHOLDERS = {
+    "en": (
+        "_Narrative unavailable for this section — the AI model isn't configured._"
+    ),
+    "kn": (
+        "_ಈ ವಿಭಾಗಕ್ಕೆ ವಿವರಣೆ ಲಭ್ಯವಿಲ್ಲ — AI ಮಾದರಿ ಕಾನ್ಫಿಗರ್ ಆಗಿಲ್ಲ._"
+    ),
+    "hi": (
+        "_इस अनुभाग के लिए विवरण उपलब्ध नहीं — AI मॉडल कॉन्फ़िगर नहीं है।_"
+    ),
+}
+# Back-compat alias (English default).
+_LLM_PLACEHOLDER = _LLM_PLACEHOLDERS["en"]
+
+
+def _placeholder(language: str = "en") -> str:
+    """Localized 'LLM unavailable' notice so a degraded model never leaks English."""
+    return _LLM_PLACEHOLDERS.get(language, _LLM_PLACEHOLDERS["en"])
+
+
+def _is_placeholder(text: str | None) -> bool:
+    return text in _LLM_PLACEHOLDERS.values()

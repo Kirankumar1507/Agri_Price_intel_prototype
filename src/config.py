@@ -8,6 +8,16 @@ TREND_DAYS = 15
 
 TRANSPORT_RATE_PER_KM = 5.0
 
+# --- Decision-engine thresholds (see src/agent.decide_action) ---
+# Kept here so the verdict rules are auditable and tunable without touching code.
+STALE_DAYS = 14              # latest price older than this → "verify" (low confidence)
+TREND_LOOKBACK_DAYS = 7      # week-on-week comparison window
+TREND_SELL_PCT = -5.0        # week-on-week change at/below this → "sell_now"
+TREND_STORE_PCT = 5.0        # week-on-week change at/above this → "store"
+TREND_HIGH_CONF_PCT = 10.0   # |change| at/beyond this → high confidence (else med)
+ARBITRAGE_MIN_GAP = 150.0    # best beats nearest by more than this (₹/qtl) → "travel"
+ARBITRAGE_MENTION_GAP = 5.0  # mention the arbitrage gap in reasons if above this (₹/qtl)
+
 # Each commodity carries three name variants:
 #   api     — Agmarknet variety-wise enum (live mandi prices)
 #   display — UI label (short)
