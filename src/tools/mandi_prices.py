@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import os
 import sys
+import time
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -14,6 +15,31 @@ from src.config import RESOURCE_ID, WINDOW_DAYS
 CACHE_DIR = Path(".cache/mandi")
 CACHE_TTL_HOURS = 24
 BASE_URL = f"https://api.data.gov.in/resource/{RESOURCE_ID}"
+
+
+def _request_records(params: dict, timeout: int = 60, retries: int = 3) -> list[dict]:
+    """GET the resource and return its `records`, retrying transient failures.
+
+    data.gov.in's gateway intermittently returns 5xx (Bad Gateway) under load,
+    so retry a few times with linear backoff before giving up. Raises the last
+    error if every attempt fails — callers catch it and degrade to [].
+    """
+    last_err: Exception | None = None
+    for attempt in range(retries):
+        try:
+            resp = requests.get(BASE_URL, params=params, timeout=timeout)
+            if resp.status_code >= 500:
+                last_err = requests.exceptions.HTTPError(
+                    f"{resp.status_code} server error", response=resp
+                )
+            else:
+                resp.raise_for_status()
+                return resp.json().get("records", [])
+        except (requests.exceptions.RequestException, ValueError) as e:
+            last_err = e
+        if attempt < retries - 1:
+            time.sleep(1.5 * (attempt + 1))  # 1.5s, 3.0s
+    raise last_err if last_err else RuntimeError("request failed")
 
 
 def fetch_prices(state: str, commodity_api: str, days: int = WINDOW_DAYS) -> list[dict]:
@@ -33,23 +59,17 @@ def fetch_prices(state: str, commodity_api: str, days: int = WINDOW_DAYS) -> lis
             return []
 
         try:
-            resp = requests.get(
-                BASE_URL,
-                params={
-                    "api-key": api_key,
-                    "format": "json",
-                    "limit": 2000,
-                    "filters[State]": state,
-                    "filters[Commodity]": commodity_api,
-                    "sort[Arrival_Date]": "desc",
-                },
-                timeout=120,
-            )
-            resp.raise_for_status()
-            raw = resp.json().get("records", [])
+            raw = _request_records({
+                "api-key": api_key,
+                "format": "json",
+                "limit": 2000,
+                "filters[State]": state,
+                "filters[Commodity]": commodity_api,
+                "sort[Arrival_Date]": "desc",
+            })
         except (requests.exceptions.RequestException, ValueError) as e:
-            # Bad/expired key, rate limit, outage, or malformed JSON: degrade to
-            # "no data" so the app never hard-crashes on an upstream API error.
+            # Bad/expired key, persistent outage, or malformed JSON (after retries):
+            # degrade to "no data" so the app never hard-crashes on an API error.
             print(f"[mandi_prices.fetch_prices] data.gov.in error: {e}", file=sys.stderr)
             return []
 
@@ -97,19 +117,13 @@ def fetch_all_mandis_for_state(state: str) -> list[dict]:
             return []
 
         try:
-            resp = requests.get(
-                BASE_URL,
-                params={
-                    "api-key": api_key,
-                    "format": "json",
-                    "limit": 2000,
-                    "filters[State]": state,
-                    "sort[Arrival_Date]": "desc",
-                },
-                timeout=120,
-            )
-            resp.raise_for_status()
-            raw = resp.json().get("records", [])
+            raw = _request_records({
+                "api-key": api_key,
+                "format": "json",
+                "limit": 2000,
+                "filters[State]": state,
+                "sort[Arrival_Date]": "desc",
+            })
         except (requests.exceptions.RequestException, ValueError) as e:
             print(f"[mandi_prices.fetch_all_mandis_for_state] data.gov.in error: {e}", file=sys.stderr)
             return []
