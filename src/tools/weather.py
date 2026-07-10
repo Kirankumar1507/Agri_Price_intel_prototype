@@ -1,4 +1,6 @@
 """7-day local forecast via Open-Meteo (No API key required)."""
+from __future__ import annotations
+
 import requests
 import json
 from pathlib import Path

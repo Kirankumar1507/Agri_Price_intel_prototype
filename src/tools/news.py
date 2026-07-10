@@ -1,4 +1,6 @@
 """Fetch and summarize agricultural news from PIB and state departments."""
+from __future__ import annotations
+
 import requests
 import json
 import xml.etree.ElementTree as ET

@@ -1,4 +1,6 @@
 """Fetch global climate signals (ENSO/IOD) affecting Indian monsoons."""
+from __future__ import annotations
+
 import requests
 import json
 from pathlib import Path
