@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -31,20 +32,27 @@ def fetch_prices(state: str, commodity_api: str, days: int = WINDOW_DAYS) -> lis
         if not api_key:
             return []
 
-        resp = requests.get(
-            BASE_URL,
-            params={
-                "api-key": api_key,
-                "format": "json",
-                "limit": 2000,
-                "filters[State]": state,
-                "filters[Commodity]": commodity_api,
-                "sort[Arrival_Date]": "desc",
-            },
-            timeout=120,
-        )
-        resp.raise_for_status()
-        raw = resp.json().get("records", [])
+        try:
+            resp = requests.get(
+                BASE_URL,
+                params={
+                    "api-key": api_key,
+                    "format": "json",
+                    "limit": 2000,
+                    "filters[State]": state,
+                    "filters[Commodity]": commodity_api,
+                    "sort[Arrival_Date]": "desc",
+                },
+                timeout=120,
+            )
+            resp.raise_for_status()
+            raw = resp.json().get("records", [])
+        except (requests.exceptions.RequestException, ValueError) as e:
+            # Bad/expired key, rate limit, outage, or malformed JSON: degrade to
+            # "no data" so the app never hard-crashes on an upstream API error.
+            print(f"[mandi_prices.fetch_prices] data.gov.in error: {e}", file=sys.stderr)
+            return []
+
         records = [_normalize(r) for r in raw]
         if not records:
             _write_cache(key, [])
@@ -88,19 +96,23 @@ def fetch_all_mandis_for_state(state: str) -> list[dict]:
         if not api_key:
             return []
 
-        resp = requests.get(
-            BASE_URL,
-            params={
-                "api-key": api_key,
-                "format": "json",
-                "limit": 2000,
-                "filters[State]": state,
-                "sort[Arrival_Date]": "desc",
-            },
-            timeout=120,
-        )
-        resp.raise_for_status()
-        raw = resp.json().get("records", [])
+        try:
+            resp = requests.get(
+                BASE_URL,
+                params={
+                    "api-key": api_key,
+                    "format": "json",
+                    "limit": 2000,
+                    "filters[State]": state,
+                    "sort[Arrival_Date]": "desc",
+                },
+                timeout=120,
+            )
+            resp.raise_for_status()
+            raw = resp.json().get("records", [])
+        except (requests.exceptions.RequestException, ValueError) as e:
+            print(f"[mandi_prices.fetch_all_mandis_for_state] data.gov.in error: {e}", file=sys.stderr)
+            return []
 
         seen: dict[tuple[str, str], dict] = {}
         for r in raw:
